@@ -141,7 +141,7 @@ function App() {
           <div className='d-grid gap-2'>
             <form className="input-group" onSubmit={addWord} >
               <input type="text" value={newWord} className="form-control" onChange={(e) => { setNewWord(e.target.value) }} />
-              <input className='btn btn-primary' type='button' value="ADD" />
+              <input className='btn btn-primary' type='submit' value="ADD" />
             </form>
             <input className='btn btn-primary' type='button' value="BACK" onClick={() => setPageStatus('start')} />
           </div>
