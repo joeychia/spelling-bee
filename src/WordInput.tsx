@@ -1,51 +1,66 @@
 import React, { useState } from 'react';
 
-interface Props {
+interface InputWordProps {
   word: string;
 }
 
-const WordInput: React.FC<Props> = ({ word }) => {
-  const [inputValue, setInputValue] = useState('');
+const InputWord: React.FC<InputWordProps> = ({ word }) => {
+  const [userInput, setUserInput] = useState('');
+  const [matched, setMatched] = useState(false);
+  const [correctWord, setCorrectWord] = useState('');
+  const recognition = new ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toLowerCase();
-    setInputValue(value);
+  recognition.continuous = true;
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = (event: any) => {
+    const lastResult = event.results[event.results.length - 1];
+    const { transcript } = lastResult[0];
+    setUserInput(transcript);
+    if (transcript === word) {
+      setMatched(true);
+      setCorrectWord('');
+      recognition.stop();
+    } else {
+      let matchedIndex = 0;
+      while (matchedIndex < transcript.length && matchedIndex < word.length && transcript[matchedIndex] === word[matchedIndex]) {
+        matchedIndex++;
+      }
+      setMatched(false);
+      setCorrectWord(word);
+      setUserInput(transcript.slice(0, matchedIndex));
+    }
   };
 
-  const getHighlightedText = () => {
-    if (inputValue === '') {
-      return <span>{word}</span>;
-    }
+  recognition.onerror = (event: any) => {
+    console.error(event.error);
+    recognition.stop();
+  };
 
-    if (inputValue === word) {
-      return <span style={{ color: 'green' }}>{word}</span>;
-    }
-
-    const isMatch = word.toLowerCase().startsWith(inputValue);
-    const matchingPart = word.slice(0, inputValue.length);
-    const restPart = word.slice(inputValue.length);
-
-    return (
-      <p role="heading" style={{ display: 'inline-block' }}>
-        <span style={{ color: isMatch ? 'black' : 'red' }}>{matchingPart}</span>
-        <span>{restPart}</span>
-      </p>
-    );
+  const handleStart = () => {
+    setUserInput('');
+    setMatched(false);
+    setCorrectWord('');
+    recognition.start();
   };
 
   return (
-    <div>
-      <label htmlFor="word-input">Input</label>
+    <div >
       <input
         type="text"
-        id="word-input"
-        aria-label="Input"
-        value={inputValue}
-        onChange={handleInputChange}
+        value={userInput}
+        style={{
+          background: matched ? 'green' : `linear-gradient(to right, green ${userInput.length}%, white ${userInput.length}%)`,
+          color: matched ? 'white' : 'black',
+        }}
+        autoFocus
       />
-      {getHighlightedText()}
+      {correctWord && <div>Correct word: {correctWord}</div>}
+      <button onClick={handleStart}>Start</button>
     </div>
   );
 };
 
-export default WordInput;
+export default InputWord;
