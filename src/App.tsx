@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Speech from 'react-speech';
 import './App.css';
 import { Draggable } from 'react-drag-reorder';
+import WordInput from './WordInput';
 
 function App() {
   const [words, setWords] = useState<string[]>(localStorage.getItem('spellings')?.split(',') ?? [])
@@ -85,6 +86,7 @@ function App() {
     setPageStatus('editspellings');
   }
 
+
   const addWord = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newWord || newWord.length === 0) {
@@ -121,7 +123,7 @@ function App() {
     <div className="App container">
       <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
         <div className="lh-1">
-          <h1>Sam's Spelling Bee</h1>
+          <h1>Spelling Bee Forever</h1>
         </div>
       </div>
 
@@ -142,7 +144,7 @@ function App() {
 
       {pageStatus === 'teststarted' &&
         <div className='d-grid gap-2'>
-          <span>Question: {qNumber + 1}</span>
+          <span>Word: {qNumber + 1}</span>
           <Speech class="btn btn-success" text={word} textAsButton="true" displayText="Play Spelling" />
           {qNumber > 0 &&
             <input className='btn btn-warning' type='button' value="PREVIOUS" onClick={clickPrevious} />
@@ -153,6 +155,7 @@ function App() {
           {qNumber + 1 >= words.length &&
             <input className='btn btn-primary' type='button' value="END TEST" onClick={() => setPageStatus('viewspellings')} />
           }
+          <WordInput word={word} />
         </div>
       }
 
@@ -198,3 +201,4 @@ function App() {
 }
 
 export default App;
+
