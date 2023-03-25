@@ -50,7 +50,7 @@ const InputWord: React.FC<InputWordProps> = ({ word }) => {
 
   return (
     <div>
-      <button onClick={startListening} disabled={listening}>
+      <button className='btn btn-primary btn-lg' onClick={startListening} disabled={listening}>
         {listening ? 'Listening...' : 'Listen'}
       </button>
       {recognized && (
@@ -58,9 +58,10 @@ const InputWord: React.FC<InputWordProps> = ({ word }) => {
           {matching ? (
             <span style={{ color: 'green', marginRight: '0.5rem' }}>&#10004;</span>
           ) : (
-            <WordDiff firstWord={word} secondWord={recognized} />
+            <span>Your incorrect spelling: <WordDiff firstWord={word} secondWord={recognized} /></span>
+            
           )}
-          <div>{word}</div>
+          {/* <div>{word}</div> */}
         </div>
       )}
     </div>

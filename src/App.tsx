@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 //@ts-ignore
-import Speech from 'react-speech';
 import './App.css';
 import { Draggable } from 'react-drag-reorder';
 import WordInput from './WordInput';
-import WordDiff from './WordDiff';
+import ReadWord from './ReadWord';
 
 function App() {
   const [words, setWords] = useState<string[]>(localStorage.getItem('spellings')?.split(',') ?? [])
@@ -146,7 +145,8 @@ function App() {
       {pageStatus === 'teststarted' &&
         <div className='d-grid gap-2'>
           <span>Word: {qNumber + 1}</span>
-          <Speech class="btn btn-success" text={word} textAsButton="true" displayText="Play Spelling" />
+          {/* <Speech class="btn btn-success" text={word} textAsButton="false" displayText="Play Spelling"  /> */}
+          <ReadWord word={word} sentence="An apple a day keeps the doctor away"/>
           {qNumber > 0 &&
             <input className='btn btn-warning' type='button' value="PREVIOUS" onClick={clickPrevious} />
           }
