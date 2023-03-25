@@ -4,6 +4,7 @@ import Speech from 'react-speech';
 import './App.css';
 import { Draggable } from 'react-drag-reorder';
 import WordInput from './WordInput';
+import WordDiff from './WordDiff';
 
 function App() {
   const [words, setWords] = useState<string[]>(localStorage.getItem('spellings')?.split(',') ?? [])

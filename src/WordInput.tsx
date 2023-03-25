@@ -1,99 +1,66 @@
-/* //create a react component InputWord in TypeScript that renders a text box. 
-Given a word, the component will listen to voice input of the spelling. While it is listening, show a recording icon and make it blinking. When it stops listening, hide the icon.  
-Then reconstruct the recognized string which is consisted of many tokens separated by space, keep single letter tokens only and concatenate them into one word, then show it in a box.
-If the new word matches the word (ignoring case), put a green check mark on the right; If the spelling doesn't match, highlight the matched part in green and the rest in red, and show the correct word below it. 
-*/
-import React, { useState, useEffect } from 'react';
+/* //create a react component InputWord in TypeScript that uses speechRecognition api.
+The input is a word.
+When user clicks "Listen" button, the component will listen to voice input.  
+Then reconstruct the recognized string. The string is consisted of many tokens separated by space, keep single letter tokens only and concatenate them into one word. Then show it in a box.
+If the new word matches the original word (ignoring case), put a green check mark on its right; If the new word doesn't match, highlight the matched part in green and the rest in red, and show the original word below it. 
+When user clicks the "Listen" button again, reset the component state and start over to listen..
 
-interface InputWordProps {
+*/
+
+import React, { useState } from 'react';
+import WordDiff from './WordDiff';
+
+type InputWordProps = {
   word: string;
-}
+};
 
 const InputWord: React.FC<InputWordProps> = ({ word }) => {
   const [listening, setListening] = useState(false);
   const [recognized, setRecognized] = useState('');
-  const [matched, setMatched] = useState(false);
+  const [matching, setMatching] = useState(false);
 
-  const recognition = new webkitSpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
+  const recognition = new window.webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.lang = 'en-US';
 
   const startListening = () => {
     setListening(true);
+    setRecognized('');
+    setMatching(false);
     recognition.start();
   };
 
-  const stopListening = () => {
-    setListening(false);
-    recognition.stop();
-  };
-
-  useEffect(() => {
-    recognition.onresult = (event) => {
-      const results = event.results;
-      const transcript = Array.from(results)
-        .map((result) => result[0])
-        .map((result) => result.transcript)
-        .join('');
-      setRecognized(transcript);
-    };
-
-    recognition.onerror = (event) => {
-      console.error(event.error);
-      stopListening();
-    };
-
-    recognition.onend = () => {
-      stopListening();
-    };
-
-    return () => {
-      recognition.abort();
-    };
-  }, []);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const tokens = value.split(' ').filter(token => token.length === 1);
-    const newWord = tokens.join('');
-    setRecognized(newWord);
-    setMatched(newWord.toLowerCase() === word.toLowerCase());
-  };
-
-  const renderMatchIndicator = () => {
-    if (recognized.toLowerCase() === word.toLowerCase()) {
-      return <span style={{ color: 'green' }}>✓</span>;
-    } else if (recognized.toLowerCase().startsWith(word.toLowerCase())) {
-      const matchedPart = recognized.substring(0, word.length);
-      const unmatchedPart = recognized.substring(word.length);
-      return (
-        <>
-          <span style={{ color: 'green' }}>{matchedPart}</span>
-          <span style={{ color: 'red' }}>{unmatchedPart}</span>
-        </>
-      );
-    } else {
-      return <span style={{ color: 'red' }}>{word}</span>;
+  recognition.onresult = (event) => {
+    const tokens: string[] = [];
+    for (let i = 0; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      tokens.push(...transcript.split(' '));
     }
+    const newWord = tokens
+      .filter((token) => token.length === 1)
+      .join('')
+      .toLowerCase();
+    setRecognized(newWord);
+    setMatching(newWord.toLowerCase() === word.toLowerCase());
+  };
+
+  recognition.onend = () => {
+    setListening(false);
   };
 
   return (
     <div>
-      <label htmlFor="input-word">{word}</label>
-      {listening && <span style={{ marginLeft: '10px', animation: 'blinking 1s infinite' }}>🎤</span>}
-      <br />
-      <input
-        id="input-word"
-        type="text"
-        value={recognized}
-        onChange={handleInputChange}
-        onFocus={startListening}
-        onBlur={stopListening}
-      />
-      {matched && <div style={{ color: 'green' }}>Correct!</div>}
-      {!matched && (
-        <div>
-          {renderMatchIndicator()}
+      <button onClick={startListening} disabled={listening}>
+        {listening ? 'Listening...' : 'Listen'}
+      </button>
+      {recognized && (
+        <div style={{ marginTop: '1rem' }}>
+          {matching ? (
+            <span style={{ color: 'green', marginRight: '0.5rem' }}>&#10004;</span>
+          ) : (
+            <WordDiff firstWord={word} secondWord={recognized} />
+          )}
+          <div>{word}</div>
         </div>
       )}
     </div>
