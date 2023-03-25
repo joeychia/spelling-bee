@@ -4,6 +4,8 @@ import './App.css';
 import { Draggable } from 'react-drag-reorder';
 import WordInput from './WordInput';
 import ReadWord from './ReadWord';
+import { MyDict } from './MyDict';
+const myDict = new MyDict();
 
 function App() {
   const [words, setWords] = useState<string[]>(localStorage.getItem('spellings')?.split(',') ?? [])
@@ -11,7 +13,6 @@ function App() {
   const [word, setWord] = useState<string>(words[qNumber]);
   const [newWord, setNewWord] = useState<string>('');
   const [pageStatus, setPageStatus] = useState<'start' | 'teststarted' | 'viewspellings' | 'editspellings'>('start');
-
   const clickNext = () => {
 
     if (qNumber + 2 > words.length) {
@@ -53,6 +54,7 @@ function App() {
     <div className='input-group' key={words.indexOf(word)}>
       <span className='input-group-text w-5 text-right'>{words.indexOf(word) + 1}.</span>
       <input className='form-control' type='text' value={word} disabled />
+      <input className='form-control' type='text' value={myDict.getWord(word)?.score} disabled />
       {pageStatus === 'editspellings' &&
         <button className='btn btn-outline-danger' type='submit' onClick={() => deleteWord(words.indexOf(word))} ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
@@ -144,9 +146,12 @@ function App() {
 
       {pageStatus === 'teststarted' &&
         <div className='d-grid gap-2'>
-          <span>Word: {qNumber + 1}</span>
+          <span>Word: {qNumber + 1} of {words.length}</span>
           {/* <Speech class="btn btn-success" text={word} textAsButton="false" displayText="Play Spelling"  /> */}
-          <ReadWord word={word} sentence="An apple a day keeps the doctor away"/>
+          <ReadWord word={word} sentence="An apple a day keeps the doctor away" dontKnownHandler={() => {
+            myDict.changeWordScore(word, -1);
+            words.push(word);
+          }}/>
           {qNumber > 0 &&
             <input className='btn btn-warning' type='button' value="PREVIOUS" onClick={clickPrevious} />
           }
@@ -156,11 +161,11 @@ function App() {
           {qNumber + 1 >= words.length &&
             <input className='btn btn-primary' type='button' value="END TEST" onClick={() => setPageStatus('viewspellings')} />
           }
-          <WordInput word={word} />
+          <WordInput word={word} successHandler={()=>myDict.changeWordScore(word, +1)}/>
         </div>
       }
 
-      {pageStatus === 'viewspellings' &&
+      {/* {pageStatus === 'viewspellings' && */}
         <div className='d-grid gap-2'>
           <div className='gap-0'>
             <Draggable onPosChange={getChangedPos}>
@@ -171,7 +176,7 @@ function App() {
           </div>
           <input className='btn btn-primary' type='button' value="HOME" onClick={clickEnd} />
         </div>
-      }
+      {/* } */}
 
       {pageStatus === 'editspellings' &&
         <>

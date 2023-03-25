@@ -12,9 +12,10 @@ import WordDiff from './WordDiff';
 
 type InputWordProps = {
   word: string;
+  successHandler?: () => void;
 };
 
-const InputWord: React.FC<InputWordProps> = ({ word }) => {
+const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const [listening, setListening] = useState(false);
   const [recognized, setRecognized] = useState('');
   const [matching, setMatching] = useState(false);
@@ -41,7 +42,10 @@ const InputWord: React.FC<InputWordProps> = ({ word }) => {
       .join('')
       .toLowerCase();
     setRecognized(newWord);
-    setMatching(newWord.toLowerCase() === word.toLowerCase());
+    if (newWord.toLowerCase() === word.toLowerCase()) {
+      setMatching(true);
+      successHandler && successHandler();
+    }
   };
 
   recognition.onend = () => {

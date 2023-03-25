@@ -5,15 +5,16 @@ When the component mounts, play the word aloud in US English slowly. When user c
 When user clicks "I don't know", show the word in big black font under the buttons, in the center. 
 The button "Sentence" should be disabled if it's empty. If it's not empty, when user click the button, read the sentence aloud.
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSpeechSynthesis } from 'react-speech-kit';
 
 type Props = {
   word: string;
   sentence?: string;
+  dontKnownHandler?: () => void;
 };
 
-const ReadWord: React.FC<Props> = ({ word, sentence }) => {
+const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
   const [showWord, setShowWord] = useState(false);
   const { voices, speak } = useSpeechSynthesis();
 
@@ -21,9 +22,15 @@ const ReadWord: React.FC<Props> = ({ word, sentence }) => {
 
   const handlePlayWord = () => speak({ text: word, rate: 0.7, voice: usEnglishVoice });
   const handlePlaySentence = () => sentence && speak({ text: sentence, rate: 0.7, voice: usEnglishVoice });
-  const handleShowWord = () => setShowWord(true);
+  const handleShowWord = () => {
+    setShowWord(true);
+    dontKnownHandler && dontKnownHandler();
+  }
   const handleHideWord = () => setShowWord(false);
-
+  useEffect(() => {
+    // Reset the state when the input prop updates
+    setShowWord(false);
+  }, [word, sentence]);
   return (
     <div style={{ textAlign: 'center' }}>
       <div
