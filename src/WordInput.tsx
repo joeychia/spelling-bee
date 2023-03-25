@@ -4,61 +4,59 @@ interface InputWordProps {
   word: string;
 }
 
+// write a function restructWord, given a string of many words separated by space. Keep single letter word only and concatenate them together them into one word
+function restructWord(input: string): string {
+  const words = input.split(' ');
+  const singleLetters = words.filter(word => word.length === 1);
+  return singleLetters.join('');
+}
+
 const InputWord: React.FC<InputWordProps> = ({ word }) => {
-  const [userInput, setUserInput] = useState('');
-  const [matched, setMatched] = useState(false);
-  const [correctWord, setCorrectWord] = useState('');
-  const recognition = new ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)();
+  const [value, setValue] = useState('');
+  const [highlight, setHighlight] = useState(false);
 
-  recognition.continuous = true;
-  recognition.lang = 'en-US';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
+  const handleRecognition = (event: SpeechRecognitionEvent) => {
+    const recognition = restructWord(event.results[0][0].transcript.trim());
+    setValue(recognition);
 
-  recognition.onresult = (event: any) => {
-    const lastResult = event.results[event.results.length - 1];
-    const { transcript } = lastResult[0];
-    setUserInput(transcript);
-    if (transcript === word) {
-      setMatched(true);
-      setCorrectWord('');
-      recognition.stop();
+    if (recognition.toLowerCase() === word.toLowerCase()) {
+      setHighlight(false);
     } else {
-      let matchedIndex = 0;
-      while (matchedIndex < transcript.length && matchedIndex < word.length && transcript[matchedIndex] === word[matchedIndex]) {
-        matchedIndex++;
-      }
-      setMatched(false);
-      setCorrectWord(word);
-      setUserInput(transcript.slice(0, matchedIndex));
+      setHighlight(true);
     }
   };
 
-  recognition.onerror = (event: any) => {
-    console.error(event.error);
-    recognition.stop();
+  const recognitionSupported = 'webkitSpeechRecognition' in window;
+
+  const recognition = recognitionSupported ? new window.webkitSpeechRecognition() : null;
+  if (recognition) {
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = handleRecognition;
+  }
+
+  const handleClick = () => {
+    if (recognition) {
+      recognition.start();
+    }
   };
 
-  const handleStart = () => {
-    setUserInput('');
-    setMatched(false);
-    setCorrectWord('');
-    recognition.start();
-  };
+  const correct = highlight ? word.substring(0, value.length) : word;
 
   return (
-    <div >
-      <input
-        type="text"
-        value={userInput}
-        style={{
-          background: matched ? 'green' : `linear-gradient(to right, green ${userInput.length}%, white ${userInput.length}%)`,
-          color: matched ? 'white' : 'black',
-        }}
-        autoFocus
-      />
-      {correctWord && <div>Correct word: {correctWord}</div>}
-      <button onClick={handleStart}>Start</button>
+    <div>
+      <div style={{ display: 'flex' }}>
+        <input type="text" value={value} onChange={e => setValue(e.target.value)} />
+        <button onClick={handleClick}>Speak</button>
+        {highlight ? (
+          <div style={{ color: 'red', marginLeft: '10px' }}>{word.substring(value.length)}</div>
+        ) : (
+          <div style={{ color: 'green', marginLeft: '10px' }}>✔</div>
+        )}
+      </div>
+      {highlight && <div style={{ color: 'green' }}>{correct}</div>}
     </div>
   );
 };
