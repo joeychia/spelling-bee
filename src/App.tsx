@@ -6,6 +6,10 @@ import WordInput from './WordInput';
 import ReadWord from './ReadWord';
 import { MyDict } from './MyDict';
 import TestWordList from './TestWordList';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import WordLists from './WordLists';
+import WordListPage from './WordListPage';
+
 window.myDict = new MyDict();
 const myDict = window.myDict;
 
@@ -154,71 +158,81 @@ function App() {
 
     listOfWordsEdit();
   }, [listOfWordsEdit]);
-  //Fascinate,Commemorate,Irrelevant,Maintenance,Disastrous,Foreign,Occurrence,Grievance,Negotiate,Aggravate
+
   return (
-    <div className="App container">
-      <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
-        <div className="lh-1">
-          <h1>Spelling Bee Forever</h1>
-        </div>
-      </div>
-
-      {pageStatus === 'start' &&
-        <>
-          <div className='d-grid gap-2'>
-            {(words.length > 0 && !(words.length === 1 && words[0] === '')) &&
-              <>
-                <input className='my-3 p-3 bg-body rounded shadow-sm' type='button' value="START TEST" onClick={() => setPageStatus('teststarted')} />
-                <input className='btn btn-primary' type='button' value="VIEW SPELLINGS" onClick={() => setPageStatus('viewspellings')} />
-              </>
-            }
-            <input className='btn btn-primary' type='button' value="EDIT LIST" onClick={() => newList()} />
-
-          </div>
-        </>
-      }
-
-      {pageStatus === 'teststarted' &&
-        <TestWordList words={words} exitHandler={() => setPageStatus('viewspellings')}  />
-      }
-
-      {pageStatus === 'viewspellings' &&
-      <div className='d-grid gap-2'>
-        <div className='gap-0'>
-            <ol className='list-group list-group-numbered'>
-            {listOfWords}
-            </ol>
-        </div>
-        <input className='btn btn-primary' type='button' value="HOME" onClick={clickEnd} />
-      </div>
-      }
-
-      {pageStatus === 'editspellings' &&
-        <>
-          <div className='d-grid gap-2'>
-            {(words.length > 0 && !(words.length === 1 && words[0] === '')) &&
-              <div className='d-grid'>
-                {listOfWords}
-              </div>
-            }
-            <form id='form1' className="input-group" onSubmit={addWord} >
-              <input type="text" value={newWord} className="form-control" onChange={(e) => { setNewWord(e.target.value) }} />
-              {/* <input className='btn btn-primary' type='submit' value="ADD" /> */}
-              <button className='btn btn-primary' form='form1' type='submit' >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
-                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-                </svg>&nbsp;
-                ADD</button>
-
-            </form>
-            <input className='btn btn-primary' type='button' value="BACK" onClick={() => setPageStatus('start')} />
-          </div>
-        </>
-      }
-
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/wordlists" Component={WordLists} />
+        <Route path="/wordlist/:wordlistName" Component={WordListPage} />
+      </Routes>
+    </BrowserRouter>
   );
+
+  //Fascinate,Commemorate,Irrelevant,Maintenance,Disastrous,Foreign,Occurrence,Grievance,Negotiate,Aggravate
+  // return (
+  //   <div className="App container">
+  //     <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+  //       <div className="lh-1">
+  //         <h1>Spelling Bee Made Easy</h1>
+  //       </div>
+  //     </div>
+  //     <WordLists />
+  //     {pageStatus === 'start' &&
+  //       <>
+  //         <div className='d-grid gap-2'>
+  //           {(words.length > 0 && !(words.length === 1 && words[0] === '')) &&
+  //             <>
+  //               <input className='my-3 p-3 bg-body rounded shadow-sm' type='button' value="START TEST" onClick={() => setPageStatus('teststarted')} />
+  //               <input className='btn btn-primary' type='button' value="VIEW SPELLINGS" onClick={() => setPageStatus('viewspellings')} />
+  //             </>
+  //           }
+  //           <input className='btn btn-primary' type='button' value="EDIT LIST" onClick={() => newList()} />
+
+  //         </div>
+  //       </>
+  //     }
+
+  //     {pageStatus === 'teststarted' &&
+  //       <TestWordList words={words} exitHandler={() => setPageStatus('viewspellings')}  />
+  //     }
+
+  //     {pageStatus === 'viewspellings' &&
+  //     <div className='d-grid gap-2'>
+  //       <div className='gap-0'>
+  //           <ol className='list-group list-group-numbered'>
+  //           {listOfWords}
+  //           </ol>
+  //       </div>
+  //       <input className='btn btn-primary' type='button' value="HOME" onClick={clickEnd} />
+  //     </div>
+  //     }
+
+  //     {pageStatus === 'editspellings' &&
+  //       <>
+  //         <div className='d-grid gap-2'>
+  //           {(words.length > 0 && !(words.length === 1 && words[0] === '')) &&
+  //             <div className='d-grid'>
+  //               {listOfWords}
+  //             </div>
+  //           }
+  //           <form id='form1' className="input-group" onSubmit={addWord} >
+  //             <input type="text" value={newWord} className="form-control" onChange={(e) => { setNewWord(e.target.value) }} />
+  //             {/* <input className='btn btn-primary' type='submit' value="ADD" /> */}
+  //             <button className='btn btn-primary' form='form1' type='submit' >
+  //               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
+  //                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+  //                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+  //               </svg>&nbsp;
+  //               ADD</button>
+
+  //           </form>
+  //           <input className='btn btn-primary' type='button' value="BACK" onClick={() => setPageStatus('start')} />
+  //         </div>
+  //       </>
+  //     }
+
+  //   </div>
+  // );
 }
 
 export default App;
