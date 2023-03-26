@@ -41,6 +41,12 @@ function App() {
   const [word, setWord] = useState<string>(words[qNumber]);
   const [newWord, setNewWord] = useState<string>('');
   const [pageStatus, setPageStatus] = useState<'start' | 'teststarted' | 'viewspellings' | 'editspellings'>('start');
+
+  useEffect(() => {
+    // Reset the states when the input prop updates
+    setWords(words);
+  }, [pageStatus]);
+
   const clickNext = () => {
 
     if (qNumber + 2 > words.length) {
@@ -82,7 +88,7 @@ function App() {
     <div className='input-group' key={words.indexOf(word)}>
       <span className='input-group-text w-5 text-right'>{words.indexOf(word) + 1}.</span>
       <input className='form-control' type='text' value={word} disabled />
-      {/* <input className='form-control' type='text' value={myDict.getWord(word)?.score} disabled /> */}
+      <input className='form-control' type='text' value={myDict.getWord(word)?.score} disabled />
       {pageStatus === 'editspellings' &&
         <button className='btn btn-outline-danger' type='submit' onClick={() => deleteWord(words.indexOf(word))} ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
