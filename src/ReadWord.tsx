@@ -30,6 +30,7 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
   useEffect(() => {
     // Reset the state when the input prop updates
     setShowWord(false);
+    handlePlayWord();
   }, [word, sentence]);
   return (
     <div style={{ textAlign: 'center' }}>
@@ -49,11 +50,11 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
         {showWord ? word : '?'}
       </div>
       <div>
-        <button className='btn btn-primary' onClick={handlePlayWord}>Play word</button>
-        <button className='btn btn-primary' onClick={handlePlaySentence} disabled={!sentence}>
+        <button type="button" className='btn btn-primary' style={{marginRight: "5px"}} onClick={handlePlayWord}>Play word</button>
+        <button type="button" className='btn btn-primary' style={{marginRight: "5px"}} onClick={handlePlaySentence} disabled={!sentence}>
           Sentence
         </button>
-        <button className='btn btn-primary' onMouseDown={handleShowWord} onMouseUp={handleHideWord}>I don't know</button>
+        <button type="button" className='btn btn-primary' style={{marginRight: "5px"}} onMouseDown={handleShowWord} onMouseUp={handleHideWord}>Peak</button>
       </div>
     </div>
   );

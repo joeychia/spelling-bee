@@ -7,8 +7,9 @@ When user clicks the "Listen" button again, reset the component state and start 
 
 */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WordDiff from './WordDiff';
+import './WordInput.css';
 
 type InputWordProps = {
   word: string;
@@ -19,7 +20,13 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const [listening, setListening] = useState(false);
   const [recognized, setRecognized] = useState('');
   const [matching, setMatching] = useState(false);
-
+  useEffect(() => {
+    // Reset the states when the input prop updates
+    setListening(false);
+    setRecognized('');
+    setMatching(false);
+  }, [word]);
+  
   const recognition = new window.webkitSpeechRecognition();
   recognition.continuous = false;
   recognition.lang = 'en-US';
@@ -44,7 +51,7 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
     setRecognized(newWord);
     if (newWord.toLowerCase() === word.toLowerCase()) {
       setMatching(true);
-      successHandler && successHandler();
+      successHandler?.();
     }
   };
 
@@ -54,8 +61,9 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
 
   return (
     <div>
-      <button className='btn btn-primary btn-lg' onClick={startListening} disabled={listening}>
-        {listening ? 'Listening...' : 'Listen'}
+      <button className='btn btn-danger btn-lg' onClick={startListening} disabled={listening}>
+        {/* <i className="gg-mic"></i> */}
+        {listening ? 'Listening...' : 'Tap to spell'}
       </button>
       {recognized && (
         <div style={{ marginTop: '1rem' }}>
