@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.6c16db5c.css",
-    "main.js": "/static/js/main.73067c5d.js",
-    "static/js/787.3520d102.chunk.js": "/static/js/787.3520d102.chunk.js",
-    "index.html": "/index.html",
-    "main.6c16db5c.css.map": "/static/css/main.6c16db5c.css.map",
-    "main.73067c5d.js.map": "/static/js/main.73067c5d.js.map",
-    "787.3520d102.chunk.js.map": "/static/js/787.3520d102.chunk.js.map"
+    "main.css": "/spelling-bee/static/css/main.6c16db5c.css",
+    "main.js": "/spelling-bee/static/js/main.1b918a0a.js",
+    "static/js/787.3520d102.chunk.js": "/spelling-bee/static/js/787.3520d102.chunk.js",
+    "index.html": "/spelling-bee/index.html",
+    "main.6c16db5c.css.map": "/spelling-bee/static/css/main.6c16db5c.css.map",
+    "main.1b918a0a.js.map": "/spelling-bee/static/js/main.1b918a0a.js.map",
+    "787.3520d102.chunk.js.map": "/spelling-bee/static/js/787.3520d102.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6c16db5c.css",
-    "static/js/main.73067c5d.js"
+    "static/js/main.1b918a0a.js"
   ]
 }
