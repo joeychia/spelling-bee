@@ -29,11 +29,11 @@ const WordListPage: React.FC = () => {
         <Link to="/wordlists">Back</Link>
       </nav>
       <h1>{wordList.name}</h1>
-      <button onClick={handleStateTest}>Start test</button> 
+      <button className="btn btn-primary btn-lg" onClick={handleStateTest}>Start test</button> 
       
-      <ul>
+      <ul className='list-group'>
         {wordList.words.map((word) => (
-          <li key={word}>{word}</li>
+          <li className='list-group-item' key={word}>{word} {window.myDict.getWordScore(word)}</li>
         ))}
       </ul>
     </div>) :

@@ -84,7 +84,6 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
             <span>Your incorrect spelling: <WordDiff firstWord={word} secondWord={recognized} /></span>
             
           )}
-          {/* <div>{word}</div> */}
         </div>
       )}
     </div>
