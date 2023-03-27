@@ -6,7 +6,7 @@ import WordInput from './WordInput';
 import ReadWord from './ReadWord';
 import { MyDict } from './MyDict';
 import TestWordList from './TestWordList';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import WordLists from './WordLists';
 import WordListPage from './WordListPage';
 
@@ -160,12 +160,12 @@ function App() {
   }, [listOfWordsEdit]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
-        <Route path="/wordlists" Component={WordLists} />
-        <Route path="/wordlist/:wordlistName" Component={WordListPage} />
+        <Route path="/wordlists" element={<WordLists />} />
+        <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 
   //Fascinate,Commemorate,Irrelevant,Maintenance,Disastrous,Foreign,Occurrence,Grievance,Negotiate,Aggravate
