@@ -6,7 +6,7 @@ import WordInput from './WordInput';
 import ReadWord from './ReadWord';
 import { MyDict } from './MyDict';
 import TestWordList from './TestWordList';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import WordLists from './WordLists';
 import WordListPage from './WordListPage';
 
@@ -162,6 +162,7 @@ function App() {
   return (
     <HashRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/wordlists" />}  />
         <Route path="/wordlists" element={<WordLists />} />
         <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
       </Routes>
