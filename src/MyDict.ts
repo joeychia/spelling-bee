@@ -43,6 +43,11 @@ export interface Word {
       return this.dict.get(word);
     }
 
+    getWordScore(word: string): number {
+      const existingWord = this.dict.get(word);
+      return existingWord && existingWord.score ? existingWord.score : MyDict.defaultScore;
+    }
+    
     changeWordScore(word: string, delta: number): void {
       const existingWord = this.dict.get(word);
       if (existingWord && existingWord.score) {

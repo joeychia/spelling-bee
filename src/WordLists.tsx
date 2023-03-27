@@ -47,5 +47,15 @@ const WordLists: React.FC = () => {
   );
 };
 
-// TODO: 1) Import and Export myDict 2) import the lists into global variable and use it in the wordlist page 3) polish design 4) test on ipad 5) skip mastered words in test 6) show word score on wordlist page 7) add account support to save myDict and wordLists 8) schedule words for testing
+/* TODO:
+ 1) Import and Export myDict 
+ v 2) import the lists into global variable and use it in the wordlist page 
+ 3) polish design 
+ x 4) test on ipad (speech recognition not working)
+ 5) skip mastered words in test 
+ 6) show word score on wordlist page 
+ 7) add account support to save myDict and wordLists 
+ 8) schedule words for testing
+ v 9) publish to github pages
+ */
 export default WordLists;

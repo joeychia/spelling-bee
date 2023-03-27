@@ -10,6 +10,8 @@ When user clicks the "Listen" button again, reset the component state and start 
 import React, { useEffect, useState } from 'react';
 import WordDiff from './WordDiff';
 import './WordInput.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 type InputWordProps = {
   word: string;
@@ -38,6 +40,14 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
     recognition.start();
   };
 
+  const toggleListening = () => {
+    if (listening) {
+      recognition.stop();
+      setListening(false);
+    } else {
+      startListening();
+    }
+  }
   recognition.onresult = (event) => {
     const tokens: string[] = [];
     for (let i = 0; i < event.results.length; i++) {
@@ -61,8 +71,9 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
 
   return (
     <div>
-      <button className='btn btn-danger btn-lg' onClick={startListening} disabled={listening}>
-        {/* <i className="gg-mic"></i> */}
+      <button className='btn btn-danger btn-lg' onClick={toggleListening} >
+        <FontAwesomeIcon icon={faMicrophone} />
+        {' '}
         {listening ? 'Listening...' : 'Tap to spell'}
       </button>
       {recognized && (

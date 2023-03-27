@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import ReadWord from "./ReadWord";
 import WordInput from "./WordInput";
 
+
 type Props = {
   words: string[];
   exitHandler: () => void;
@@ -22,7 +23,9 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
 
   useEffect(() => {
-    const shuffled = [...words].sort(() => Math.random() - 0.5);
+    // filter the words that has a score less than 100 in myDict
+    const filteredWords = words.filter((word) => window.myDict.getWordScore(word) <= 100);
+    const shuffled = [...filteredWords].sort(() => Math.random() - 0.5);
     setShuffledWords(shuffled);
   }, [words]);
 
