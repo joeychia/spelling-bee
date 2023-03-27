@@ -70,7 +70,7 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   };
 
   return (
-    <div>
+    <div className='text-center'>
       <button className='btn btn-danger btn-lg' onClick={toggleListening} >
         <FontAwesomeIcon icon={faMicrophone} />
         {' '}

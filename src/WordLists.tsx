@@ -30,15 +30,25 @@ window.gWordLists = [
   { name: 'List 2', words: list1B },
 ];
 
+const Header: React.FC = () => {
+  return (
+         <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+           <div className="lh-1">
+             <h1>Spelling Bee Made Easy</h1>
+           </div>
+         </div>
+  );
+}
 const WordLists: React.FC = () => {
   const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
 
   return (
     <div>
+      <Header />
       <h1>Word Lists</h1>
-      <ul>
+      <ul className="list-group">
         {wordLists.map((wordList) => (
-          <li key={wordList.name}>
+          <li className="list-group-item" key={wordList.name}>
             <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link>
           </li>
         ))}

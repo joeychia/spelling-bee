@@ -70,14 +70,15 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler }) => {
       </div>
       <div><ReadWord word={currentWord} dontKnownHandler={handleUnfamiliar} /></div>
       <WordInput word={currentWord} successHandler={handlePassed} />
-      <button onClick={handlePreviousWord} disabled={currentWordIndex === 0}>
-        Previous
-      </button>
-      <button onClick={handleNextWord} disabled={currentWordIndex === shuffledWords.length - 1}>
-        Next
-      </button>
-      {/* <button onClick={()=>handleUnfamiliar(currentWord)}>Unfamiliar</button> */}
-      <button onClick={handleDone}>I'm done</button>
+      <div className='text-center'>
+        <button onClick={handlePreviousWord} disabled={currentWordIndex === 0}>
+          Previous
+        </button>
+        <button onClick={handleNextWord} disabled={currentWordIndex === shuffledWords.length - 1}>
+          Next
+        </button>
+        <button onClick={handleDone}>I'm done</button>
+      </div>
     </div>
   );
 };
