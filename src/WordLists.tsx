@@ -23,19 +23,15 @@ import list1B from "./wordLists/1B.json";
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { WordList } from "./WordListPage";
 
-interface WordList {
-  name: string;
-  words: string[];
-}
-
-const defaultWordLists: WordList[] = [
+window.gWordLists = [
   { name: 'List 1', words: list1A },
   { name: 'List 2', words: list1B },
 ];
 
 const WordLists: React.FC = () => {
-  const [wordLists, setWordLists] = useState<WordList[]>(defaultWordLists);
+  const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
 
   return (
     <div>
