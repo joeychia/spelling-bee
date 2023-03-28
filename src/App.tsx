@@ -9,9 +9,11 @@ import TestWordList from './TestWordList';
 import { BrowserRouter, HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import WordLists from './WordLists';
 import WordListPage from './WordListPage';
+import { ReviewDict } from './ReviewDict';
 
 window.myDict = new MyDict();
 window.myDict.restoreFromLocal();
+window.gReviewWords =new ReviewDict();
 
 const myDict = window.myDict;
 

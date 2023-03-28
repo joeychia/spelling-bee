@@ -16,11 +16,13 @@ import WordInput from "./WordInput";
 type Props = {
   words: string[];
   exitHandler: () => void;
+  listName?: string;
 };
 
-const TestWordList: React.FC<Props> = ({ words, exitHandler }) => {
+const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
+  const reviewWordDict = window.gReviewWords || {};
 
   useEffect(() => {
     // filter the words that has a score less than 100 in myDict
@@ -42,6 +44,7 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler }) => {
     const newWords = [...shuffledWords, currentWord];
     setShuffledWords(newWords);
     window.myDict.changeWordScore(currentWord, -1);
+    window.gReviewWords.addWord(currentWord, listName);
   };
 
   const handlePassed = () => {

@@ -24,6 +24,7 @@ import list1B from "./wordLists/1B.json";
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WordList } from "./WordListPage";
+import ReviewWords from "./ReviewWords";
 
 window.gWordLists = [
   { name: 'List 1', words: list1A },
@@ -31,12 +32,16 @@ window.gWordLists = [
 ];
 
 const Header: React.FC = () => {
-  return (
-         <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
-           <div className="lh-1">
-             <h1>Spelling Bee Made Easy</h1>
-           </div>
-         </div>
+  return (<div>
+    <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+      <div className="lh-1">
+        <h1>Spelling Bee Made Easy</h1>
+      </div>
+
+    </div>
+    <h2>Pick a word list to test</h2>
+    <p>The test results is stored in your browser. You can pause any time and come back to the continue testing. Each word starts with score 100. If you spell the word right, you will get 1 point on the word. If you can't spell it and hold "Peak" button to see the word, you will lost 1 point. Word with 100+ score means you mastered it and it will be skipped in all following tests.</p>
+  </div>
   );
 }
 const WordLists: React.FC = () => {
@@ -45,7 +50,6 @@ const WordLists: React.FC = () => {
   return (
     <div>
       <Header />
-      <h1>Word Lists</h1>
       <ul className="list-group">
         {wordLists.map((wordList) => (
           <li className="list-group-item" key={wordList.name}>
@@ -53,19 +57,20 @@ const WordLists: React.FC = () => {
           </li>
         ))}
       </ul>
+      <ReviewWords />
     </div>
   );
 };
 
 /* TODO:
- 1) Import and Export myDict 
+ v 1) Import and Export myDict 
  v 2) import the lists into global variable and use it in the wordlist page 
  3) polish design 
  x 4) test on ipad (speech recognition not working)
  v 5) skip mastered words in test 
  v 6) show word score on wordlist page 
  7) add account support to save myDict and wordLists 
- 8) schedule words for testing
+ v 8) schedule words for testing
  v 9) publish to github pages
  */
 export default WordLists;

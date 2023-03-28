@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import TestWordList from './TestWordList';
-import list1A from "./wordLists/1A.json";
-import list1B from "./wordLists/1B.json";
 
 export interface WordList {
   name: string;
@@ -48,7 +46,7 @@ const WordListPage: React.FC = () => {
       </ul>
     </div>) :
     <div>
-        <TestWordList words={wordList.words} exitHandler = {handleEndTest} />
+        <TestWordList words={wordList.words} listName={wordlistName} exitHandler = {handleEndTest} />
     </div>);
 };
 
