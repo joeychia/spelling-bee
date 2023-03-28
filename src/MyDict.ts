@@ -12,6 +12,11 @@ export interface Word {
   export class MyDict {
     private dict: Map<string, Word> = new Map();
     static defaultScore = 100;
+
+    MyDict() {
+      this.restoreFromLocal();
+    }
+
     setWordScore(word: string, score?: number): void {
       const existingWord = this.dict.get(word);
       if (existingWord) {
@@ -57,11 +62,11 @@ export interface Word {
       }
     }
 
-    save(): void {
+    saveToLocal(): void {
       localStorage.setItem('myDict', JSON.stringify(Array.from(this.dict.entries())));
     }
   
-    load(): void {
+    restoreFromLocal(): void {
       const dictString = localStorage.getItem('myDict');
       if (dictString) {
         const dictEntries = JSON.parse(dictString) as [string, Word][];

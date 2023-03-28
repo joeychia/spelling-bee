@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import TestWordList from './TestWordList';
 import list1A from "./wordLists/1A.json";
@@ -15,8 +15,18 @@ const WordListPage: React.FC = () => {
 
   const [isTesting, setIsTesting] = useState(false); // Add state and default value
 
-  const handleStateTest = () => {
+
+  useEffect(() => {
+    setIsTesting(false);
+  }, []);
+  
+  const handleStartTest = () => {
     setIsTesting(true);
+  };
+
+  const handleEndTest = () => {
+    setIsTesting(false);
+    window.myDict.saveToLocal();
   };
 
   if (!wordList) {
@@ -29,7 +39,7 @@ const WordListPage: React.FC = () => {
         <Link to="/wordlists">Back</Link>
       </nav>
       <h1>{wordList.name}</h1>
-      <button className="btn btn-primary btn-lg" onClick={handleStateTest}>Start test</button> 
+      <button className="btn btn-primary btn-lg" onClick={handleStartTest}>Start test</button> 
       
       <ul className='list-group'>
         {wordList.words.map((word) => (
@@ -38,7 +48,7 @@ const WordListPage: React.FC = () => {
       </ul>
     </div>) :
     <div>
-        <TestWordList words={wordList.words} exitHandler = {() => setIsTesting(false)} />
+        <TestWordList words={wordList.words} exitHandler = {handleEndTest} />
     </div>);
 };
 

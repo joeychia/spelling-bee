@@ -11,6 +11,8 @@ import WordLists from './WordLists';
 import WordListPage from './WordListPage';
 
 window.myDict = new MyDict();
+window.myDict.restoreFromLocal();
+
 const myDict = window.myDict;
 
 // class TestWordList extends React.Component {
