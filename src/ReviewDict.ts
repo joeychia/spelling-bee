@@ -9,7 +9,7 @@ The class has a method to get associated listNames and all reviewed dates of all
 export interface ReviewType {
   word: string;
   listName: string;
-  reviewedDates: Set<string>
+  reviewedDates: string[]
 }
 
 export interface ReviewWordDict {
@@ -44,9 +44,9 @@ export class ReviewDict {
 
     const wordIndex = wordInfoArr.findIndex(w => w.word === word);
     if (wordIndex !== -1) {
-      wordInfoArr[wordIndex].reviewedDates.add(reviewedDate);
+      wordInfoArr[wordIndex].reviewedDates.indexOf(reviewedDate) === -1 && wordInfoArr[wordIndex].reviewedDates.push(reviewedDate);
     } else {
-      wordInfoArr.push({ word, listName, reviewedDates: new Set([reviewedDate]) });
+      wordInfoArr.push({ word, listName, reviewedDates: [reviewedDate] });
     }
   }
 

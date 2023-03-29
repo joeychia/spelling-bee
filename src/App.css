@@ -48,3 +48,153 @@
 .w-5{
   width: 5%;
 }
+
+.test-body {
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #FFEC8B;
+  color: #4B0082;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: #FFF0F5;
+  border: 5px dashed #7CFC00;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.word-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin-bottom: 30px; */
+}
+
+.word-placeholder {
+  font-size: 48px;
+  font-weight: bold;
+  background-color: #FFFACD;
+  padding: 10px;
+  border: 2px solid #4B0082;
+  border-radius: 10px;
+  width: 80%;
+  text-align: center;
+}
+
+.container {
+  background-color: #FFF0F5;
+  border: 5px dashed #2f4914;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.test-btn {
+  background-color: #FFB6C1;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.test-btn:hover {
+  background-color: #FF69B4;
+  transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .buttons {
+      flex-direction: column;
+  }
+
+  .test-btn {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+}
+
+#record-btn {
+  background-color: #f96178;
+  border: none;
+  border-radius: 10%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  transform: translateX(-100%);
+  margin-right: -40px;
+}
+
+.microphone-icon::before,
+.stop-icon::before {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  content: "\1F399";
+}
+
+.stop-icon::before {
+  content: "\25A0";
+}
+
+#record-btn:hover {
+  background-color: #fb7005;
+}
+
+#record-btn:active {
+  background-color: #900016;
+}
+#spelling-input {
+  flex-grow: 1;
+  font-size: 18px;
+  padding: 5px;
+  border: 2px solid #4B0082;
+  border-radius: 5px;
+  padding-right: 50px;
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

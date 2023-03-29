@@ -33,28 +33,19 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
     handlePlayWord();
   }, [word, sentence]);
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div className="word-box">
+      <h2>Word:</h2>
       <div
-        style={{
-          display: 'inline-block',
-          width: '30%',
-          height: '5rem',
-          border: '1px solid black',
-          margin: '1rem',
-          fontSize: '3rem',
-          fontWeight: 'bold',
-          color: 'black',
-          lineHeight: '5rem',
-        }}
+        className='word-placeholder'
       >
         {showWord ? word : '?'}
       </div>
-      <div>
-        <button type="button" className='btn btn-primary' style={{marginRight: "5px"}} onClick={handlePlayWord}>Play word</button>
-        <button type="button" className='btn btn-primary' style={{marginRight: "5px"}} onClick={handlePlaySentence} disabled={!sentence}>
+      <div className='buttons'>
+        <button type="button" id="read-word" className='test-btn' onClick={handlePlayWord}>Read</button>
+        <button type="button" id="read-example" className='test-btn'  onClick={handlePlaySentence} disabled={!sentence}>
           Sentence
         </button>
-        <button type="button" className='btn btn-primary' style={{marginRight: "5px"}} onPointerDown={handleShowWord} onPointerUp={handleHideWord} >Peak</button>
+        <button type="button" id="show-answer" className='test-btn'  onPointerDown={handleShowWord} onPointerUp={handleHideWord} >Peak</button>
       </div>
     </div>
   );

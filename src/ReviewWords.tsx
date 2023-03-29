@@ -11,10 +11,6 @@ const ReviewWords: React.FC = () => {
   const [reviewWords, setReviewWords] = useState([] as ReviewType[]); // Add state and default value
   const [wordList, setWordList] = useState([] as string[]); // Add state and default value
 
-  function saveToLocalStorage(data: ReviewDict|null) {
-    data?.save()
-  }
-    
   useEffect(() => {
     setIsTesting(false);
     reviewWordDict = window.gReviewWords || {};
@@ -32,7 +28,7 @@ const ReviewWords: React.FC = () => {
   const handleEndTest = () => {
     setIsTesting(false);
     window.myDict.saveToLocal();
-    saveToLocalStorage(reviewWordDict);
+    reviewWordDict.save();
   };
 
   if (!reviewWords) {
@@ -41,11 +37,11 @@ const ReviewWords: React.FC = () => {
 
   return (
     !isTesting ? (<div>
-      {wordList.length&&<button className="btn btn-primary btn-lg" onClick={handleStartTest}>Review {wordList.length} words</button> }
+      {wordList.length > 0&&<button className="btn btn-primary btn-lg" onClick={handleStartTest}>Review {wordList.length} words</button> }
       
       <ul className='list-group'>
         {reviewWords.map((word) => (
-          <li className='list-group-item' key={word.word}>{word.word} {window.myDict.getWordScore(word.word)} from {word.listName}, reviewed on {word.reviewedDates} </li>
+          <li className='list-group-item' key={word.word}>{word.word}: {window.myDict?.getWordScore(word.word)} from {word.listName}, reviewed on {Array.from(word.reviewedDates)} </li>
         ))}
       </ul>
     </div>) :

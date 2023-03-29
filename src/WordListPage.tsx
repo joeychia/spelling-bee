@@ -25,6 +25,7 @@ const WordListPage: React.FC = () => {
   const handleEndTest = () => {
     setIsTesting(false);
     window.myDict.saveToLocal();
+    window.gReviewWords.save();
   };
 
   if (!wordList) {

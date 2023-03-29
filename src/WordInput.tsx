@@ -5,6 +5,8 @@ Then reconstruct the recognized string. The string is consisted of many tokens s
 If the new word matches the original word (ignoring case), put a green check mark on its right; If the new word doesn't match, highlight the matched part in green and the rest in red, and show the original word below it. 
 When user clicks the "Listen" button again, reset the component state and start over to listen..
 
+
+Create an inputbox in React typescript. It should have a microphone button on the right end inside the box. The placeholder text is "type or tap to speak". It allows typing in the box. When user hit Enter key, it calls "finish" function with the input. User can also tap and hold the microphone button to speak. Once tapped, it listens to user voice and start speech recognizing. Once speech is done or user release the button, it stops listening, the recognized word, and call "finish" function with the word.
 */
 
 import React, { useEffect, useState } from 'react';
@@ -20,6 +22,7 @@ type InputWordProps = {
 
 const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const [listening, setListening] = useState(false);
+  const [shaking, setShaking] = useState(false);
   const [recognized, setRecognized] = useState('');
   const [matching, setMatching] = useState(false);
   useEffect(() => {
@@ -40,14 +43,11 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
     recognition.start();
   };
 
-  const toggleListening = () => {
-    if (listening) {
+  const stopListening = () => {
       recognition.stop();
       setListening(false);
-    } else {
-      startListening();
-    }
   }
+
   recognition.onresult = (event) => {
     const tokens: string[] = [];
     for (let i = 0; i < event.results.length; i++) {
@@ -55,13 +55,15 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
       tokens.push(...transcript.split(' '));
     }
     const newWord = tokens
-      .filter((token) => token.length === 1)
+      // .filter((token) => token.length === 1)
       .join('')
       .toLowerCase();
     setRecognized(newWord);
     if (newWord.toLowerCase() === word.toLowerCase()) {
       setMatching(true);
       successHandler?.();
+    } else {
+      shakeInputBox();
     }
   };
 
@@ -69,14 +71,39 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
     setListening(false);
   };
 
+  const handleClick = () => {
+    setRecognized('');
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      if (recognized.toLowerCase() === word.toLowerCase()) {
+        setMatching(true);
+        successHandler?.();
+      } else {
+        shakeInputBox();
+      }
+    } 
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const target = event.currentTarget as HTMLInputElement; // type casting
+    setRecognized(target.value);
+  };
+
+  function shakeInputBox() {
+    setShaking(true);
+    // Remove the "shake" CSS class after 0.5 seconds
+    setTimeout(() => {
+      setShaking(false);
+    }, 500);
+  }
   return (
-    <div className='text-center'>
-      <button className='btn btn-danger btn-lg' onClick={toggleListening} >
-        <FontAwesomeIcon icon={faMicrophone} />
-        {' '}
-        {listening ? 'Listening...' : 'Tap to spell'}
-      </button>
-      {recognized && (
+    <div className='input-area d-inline-flex'>
+     
+      <input type="text" id="spelling-input" className={shaking?"shake":""} placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
+      <button id="record-btn" className="microphone-icon"  onPointerDown={startListening} onPointerUp={stopListening} ></button>
+      {/* {recognized && (
         <div style={{ marginTop: '1rem' }}>
           {matching ? (
             <span style={{ color: 'green', marginRight: '0.5rem' }}>&#10004;</span>
@@ -85,7 +112,7 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
             
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
