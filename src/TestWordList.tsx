@@ -23,7 +23,7 @@ import React, { useState, useEffect } from "react";
 import ProgressBar from "./ProgressBar";
 import ReadWord from "./ReadWord";
 import WordInput from "./WordInput";
-
+import sound from "./snap.mp3";
 
 type Props = {
   words: string[];
@@ -59,7 +59,13 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
     window.gReviewWords.addWord(currentWord, listName);
   };
 
+  const playCelebrationSound = () => {
+    const audio = new Audio(sound);
+    audio.play();
+  };
+
   const handlePassed = () => {
+    playCelebrationSound();
     const currentWord = shuffledWords[currentWordIndex];
     window.myDict.changeWordScore(currentWord, +1);
     handleNextWord();
@@ -75,16 +81,6 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
   return (
     <div>
       <h1>Spelling Test</h1>
-
-      {/* <div
-        style={{
-          background: `linear-gradient(to right, green ${progress}%, #f3f4f6 ${progress}% 100%)`,
-          padding: "0.5rem",
-          textAlign: "right"
-        }}
-      >
-        
-      </div> */}
      {shuffledWords.length > 0 ? (<>
       <div className="container">
         <ReadWord word={currentWord} dontKnownHandler={handleUnfamiliar} />
