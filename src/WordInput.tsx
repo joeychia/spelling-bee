@@ -99,7 +99,7 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
     }, 500);
   }
   return (
-    <div className='input-area d-inline-flex'>
+    <div className='input-area mt-1 d-inline-flex'>
      
       <input type="text" id="spelling-input" className={shaking?"shake":""} placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
       <button id="record-btn" className="microphone-icon"  onPointerDown={startListening} onPointerUp={stopListening} ></button>

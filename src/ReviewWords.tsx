@@ -37,7 +37,7 @@ const ReviewWords: React.FC = () => {
 
   return (
     !isTesting ? (<div>
-      {wordList.length > 0&&<button className="btn btn-primary btn-lg" onClick={handleStartTest}>Review {wordList.length} words</button> }
+      {wordList.length > 0&&<button className="test-btn" onClick={handleStartTest}>Review {wordList.length} words</button> }
       
       <ul className='list-group'>
         {reviewWords.map((word) => (

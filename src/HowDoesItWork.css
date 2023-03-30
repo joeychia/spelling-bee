@@ -1,0 +1,18 @@
+.how-does-it-work {
+    font-family: Arial, sans-serif;
+  }
+  
+  .expandable-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .explanation {
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 16px;
+    margin-top: 8px;
+  }
+  

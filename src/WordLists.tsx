@@ -25,6 +25,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WordList } from "./WordListPage";
 import ReviewWords from "./ReviewWords";
+import bee from './bee.png';
+import HowDoesItWork from "./HowDoesItWork";
 
 window.gWordLists = [
   { name: 'List 1', words: list1A },
@@ -33,31 +35,39 @@ window.gWordLists = [
 
 const Header: React.FC = () => {
   return (<div>
-    <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+    <div className="d-flex align-items-center my-3 text-white bg-purple rounded shadow-sm">
       <div className="lh-1">
-        <h1>Spelling Bee Made Easy</h1>
+        
+        <h1><img src={bee} alt="logo bee" className="logo" /> Spelling Made EZ</h1>
       </div>
 
     </div>
     <h2>Pick a word list to test</h2>
-    <p>The test results is stored in your browser. You can pause any time and come back to the continue testing. Each word starts with score 100. If you spell the word right, you will get 1 point on the word. If you can't spell it and hold "Peak" button to see the word, you will lost 1 point. Word with 100+ score means you mastered it and it will be skipped in all following tests.</p>
-  </div>
+      </div>
   );
 }
 const WordLists: React.FC = () => {
   const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
-
+  const reviewWordDict = window.gReviewWords || {};
+  const date = new Date().toISOString().slice(0, 10)
+  const toReview = reviewWordDict.getWordInfoOnDate(date);
   return (
-    <div>
+    <div className="page-container">
       <Header />
       <ul className="list-group">
-        {wordLists.map((wordList) => (
+        {toReview.length > 0 && <li className="list-group-item" key="review-today">
+            <Link to={`/wordlist/review-today`}>Review Today</Link>
+        </li>}
+       {wordLists.map((wordList) => (
           <li className="list-group-item" key={wordList.name}>
             <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link>
           </li>
         ))}
+
       </ul>
-      <ReviewWords />
+      {/* <ReviewWords /> */}
+      <HowDoesItWork />
+
     </div>
   );
 };

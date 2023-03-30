@@ -93,13 +93,13 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
       <ProgressBar progress={progress} />
       {shuffledWords.length - currentWordIndex} words left
       <div className='text-center'>
-        <button onClick={handlePreviousWord} disabled={currentWordIndex === 0}>
+        <button className="test-btn" onClick={handlePreviousWord} disabled={currentWordIndex === 0}>
           Previous
         </button>
-        <button onClick={handleNextWord} disabled={currentWordIndex === shuffledWords.length - 1}>
+        <button className="test-btn" onClick={handleNextWord} disabled={currentWordIndex === shuffledWords.length - 1}>
           Next
         </button>
-        <button onClick={handleDone}>I'm done</button>
+        <button className="test-btn" onClick={handleDone}>I'm done</button>
       </div>
     </div>
   );

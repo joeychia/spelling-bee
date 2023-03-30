@@ -53,12 +53,13 @@
   font-family: 'Comic Sans MS', sans-serif;
   background-color: #FFEC8B;
   color: #4B0082;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   /* align-items: center; */
   height: 100vh;
-  margin: 0;
   padding: 0;
+  max-width: 500px;
+  margin: 30px;
 }
 
 .container {
@@ -69,6 +70,12 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.page-container {
+  width: 100%;
+}
+.logo {
+  width: 70px;
+}
 h1 {
   font-size: 36px;
   text-align: center;
@@ -100,7 +107,9 @@ h1 {
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
-
+.input-area {
+  width: 100%;
+}
 .buttons {
   display: flex;
   justify-content: space-around;
