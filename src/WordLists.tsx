@@ -18,8 +18,10 @@ Put the sentence in the given json format.
 
 
 */
-import list1A from "./wordLists/1A.json";
-import list1B from "./wordLists/1B.json";
+import list1 from "./wordLists/1.json";
+import list2 from "./wordLists/2.json";
+import list3 from "./wordLists/3.json";
+import example from "./wordLists/1A.json";
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -29,8 +31,10 @@ import bee from './bee.png';
 import HowDoesItWork from "./HowDoesItWork";
 
 window.gWordLists = [
-  { name: 'List 1', words: list1A },
-  { name: 'List 2', words: list1B },
+  { name: '1st Grade', words: list1 },
+  { name: '2nd Grade', words: list2 },
+  { name: '3rd Grade', words: list3 },
+  { name: 'Example', words: example },
 ];
 
 const Header: React.FC = () => {
@@ -56,11 +60,11 @@ const WordLists: React.FC = () => {
       <Header />
       <ul className="list-group">
         {toReview.length > 0 && <li className="list-group-item" key="review-today">
-            <Link to={`/wordlist/review-today`}>Review Today</Link>
+            <Link to={`/wordlist/review-today`}>Review Today</Link> {toReview.length}
         </li>}
        {wordLists.map((wordList) => (
           <li className="list-group-item" key={wordList.name}>
-            <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link>
+            <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link> {wordList.words.length}
           </li>
         ))}
 

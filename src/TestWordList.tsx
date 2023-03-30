@@ -95,7 +95,7 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
         <button className="test-btn" onClick={handleNextWord} disabled={currentWordIndex === shuffledWords.length - 1}>
           Next
         </button>
-        
+        <button className="test-btn" onClick={handleDone}>I'm done</button>
       </div></>) : (
         <div className="text-center"><div>You've mastered all words in this list today!</div> <button className="test-btn" onClick={handleDone}>Go back</button></div>
       )}

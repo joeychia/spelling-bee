@@ -178,7 +178,7 @@ function App() {
   //   <div className="App container">
   //     <div className="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
   //       <div className="lh-1">
-  //         <h1>Spelling Bee Made Easy</h1>
+  //         <h1>Spelling Bee Made EZ</h1>
   //       </div>
   //     </div>
   //     <WordLists />

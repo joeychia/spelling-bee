@@ -58,10 +58,10 @@ export class ReviewDict {
     return new Set<string>(wordInfoArr.map(w => w.word));
   }
 
-  public getWordInfoOnDate(date: string): ReviewType[] | undefined {
+  public getWordInfoOnDate(date: string): ReviewType[] {
     const wordInfoArr = this.data[date];
     if (!wordInfoArr) {
-      return undefined;
+      return [];
     }
     return wordInfoArr;
   }
