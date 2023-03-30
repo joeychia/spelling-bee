@@ -38,7 +38,7 @@ const Header: React.FC = () => {
     <div className="d-flex align-items-center my-3 text-white bg-purple rounded shadow-sm">
       <div className="lh-1">
         
-        <h1><img src={bee} alt="logo bee" className="logo" /> Spelling Made EZ</h1>
+        <h1 className="m-0"><img src={bee} alt="logo bee" className="logo" /> Spelling Made EZ</h1>
       </div>
 
     </div>
@@ -75,7 +75,7 @@ const WordLists: React.FC = () => {
 /* TODO:
  v 1) Import and Export myDict 
  v 2) import the lists into global variable and use it in the wordlist page 
- 3) polish design 
+ v 3) polish design 
  x 4) test on ipad (speech recognition not working)
  v 5) skip mastered words in test 
  v 6) show word score on wordlist page 

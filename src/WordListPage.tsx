@@ -59,7 +59,8 @@ const WordListPage: React.FC = () => {
       <button className="btn btn-primary btn-lg" onClick={handleStartTest}>Start test</button> 
       
       <ul className='list-group mt-2 mb-2'>
-        {wordList.words.map((word) => (
+        {wordList.words.map((word) => (window.myDict.getWordScore(word) > 100 ?
+          <li className='list-group-item' key={word}><del>{word} {window.myDict.getWordScore(word)}</del></li> :
           <li className='list-group-item' key={word}>{word} {window.myDict.getWordScore(word)}</li>
         ))}
       </ul>
