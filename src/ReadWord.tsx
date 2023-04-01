@@ -7,6 +7,7 @@ The button "Sentence" should be disabled if it's empty. If it's not empty, when 
 */
 import React, { useEffect, useState } from 'react';
 import { useSpeechSynthesis } from 'react-speech-kit';
+import Sentence from './Sentence';
 
 type Props = {
   word: string;
@@ -21,7 +22,7 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
   const usEnglishVoice = voices.find((voice: SpeechSynthesisVoice) => voice.lang === 'en-US');
 
   const handlePlayWord = () => speak({ text: word, rate: 0.7, voice: usEnglishVoice });
-  const handlePlaySentence = () => sentence && speak({ text: sentence, rate: 0.7, voice: usEnglishVoice });
+
   const handleShowWord = () => {
     setShowWord(true);
     dontKnownHandler && dontKnownHandler();
@@ -42,9 +43,7 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
       </div>
       <div className='buttons'>
         <button type="button" id="read-word" className='test-btn' onClick={handlePlayWord}>Read</button>
-        <button type="button" id="read-example" className='test-btn'  onClick={handlePlaySentence} disabled={!sentence}>
-          Sentence
-        </button>
+        <Sentence word={word} />
         <button type="button" id="show-answer" className='test-btn'  onPointerDown={handleShowWord} onPointerUp={handleHideWord} >Peak</button>
       </div>
     </div>
