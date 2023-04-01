@@ -7,7 +7,6 @@ Each word list has a name, and a list of words.
 The word list page /wordlist/:wordlistName has a top bar with a "Back" button. 
 */
 
-
 /*
 
 For each word in the list, find an example sentence for them, the sentence should be easy to understand by elementary student.
@@ -23,55 +22,60 @@ import list2 from "./wordLists/2.json";
 import list3 from "./wordLists/3.json";
 import example from "./wordLists/1A.json";
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { WordList } from "./WordListPage";
 import ReviewWords from "./ReviewWords";
-import bee from './bee.png';
+import bee from "./bee.png";
 import HowDoesItWork from "./HowDoesItWork";
+import UserControl from "./UserControl";
 
 window.gWordLists = [
-  { name: '1st Grade', words: list1 },
-  { name: '2nd Grade', words: list2 },
-  { name: '3rd Grade', words: list3 },
-  { name: 'Example', words: example },
+  { name: "1st Grade", words: list1 },
+  { name: "2nd Grade", words: list2 },
+  { name: "3rd Grade", words: list3 },
+  { name: "Example", words: example },
 ];
 
 const Header: React.FC = () => {
-  return (<div>
-    <div className="d-flex align-items-center my-3 text-white bg-purple rounded shadow-sm">
-      <div className="lh-1">
-        
-        <h1 className="m-0"><img src={bee} alt="logo bee" className="logo" /> Spelling Made EZ</h1>
+  return (
+    <div>
+      <UserControl onUserChanged={(_?) => {}} />
+      <div className="d-flex align-items-center my-3 text-white bg-purple rounded shadow-sm">
+        <div className="lh-1">
+          <h1 className="m-0">
+            <img src={bee} alt="logo bee" className="logo" /> Spelling Made EZ
+          </h1>
+        </div>
       </div>
-
+      <h2>Pick a word list to test</h2>
     </div>
-    <h2>Pick a word list to test</h2>
-      </div>
   );
-}
+};
 const WordLists: React.FC = () => {
   const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
   const reviewWordDict = window.gReviewWords || {};
-  const date = new Date().toISOString().slice(0, 10)
+  const date = new Date().toISOString().slice(0, 10);
   const toReview = reviewWordDict.getWordInfoOnDate(date);
   return (
     <div className="page-container">
       <Header />
       <ul className="list-group">
-        {toReview.length > 0 && <li className="list-group-item" key="review-today">
-            <Link to={`/wordlist/review-today`}>Review Today</Link> {toReview.length}
-        </li>}
-       {wordLists.map((wordList) => (
+        {toReview.length > 0 && (
+          <li className="list-group-item" key="review-today">
+            <Link to={`/wordlist/review-today`}>Review Today</Link>{" "}
+            {toReview.length}
+          </li>
+        )}
+        {wordLists.map((wordList) => (
           <li className="list-group-item" key={wordList.name}>
-            <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link> {wordList.words.length}
+            <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link>{" "}
+            {wordList.words.length}
           </li>
         ))}
-
       </ul>
       {/* <ReviewWords /> */}
       <HowDoesItWork />
-
     </div>
   );
 };

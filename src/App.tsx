@@ -10,6 +10,52 @@ import { BrowserRouter, HashRouter, Route, Routes, Navigate } from 'react-router
 import WordLists from './WordLists';
 import WordListPage from './WordListPage';
 import { ReviewDict } from './ReviewDict';
+import { getAuth, signInWithRedirect, getRedirectResult , GoogleAuthProvider } from "firebase/auth";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCNqxpkRjwFJ2HaBKPI_PIQigtR16OC1g4",
+  authDomain: "spelling-made-ez.firebaseapp.com",
+  databaseURL: "https://spelling-made-ez-default-rtdb.firebaseio.com",
+  projectId: "spelling-made-ez",
+  storageBucket: "spelling-made-ez.appspot.com",
+  messagingSenderId: "670292969135",
+  appId: "1:670292969135:web:11fc909bfaefa6c5e5365a",
+  measurementId: "G-QZHSM76RM9"
+};
+
+// Initialize Firebase
+window.gApp = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(gApp);
+
+
+// signInWithRedirect(auth, provider);
+// getRedirectResult (auth, provider)
+//   .then((result) => {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     const credential = GoogleAuthProvider.credentialFromResult(result!);
+//     const token = credential?.accessToken;
+//     // The signed-in user info.
+//     const user = result?.user;
+//     console.log(user)
+//     // IdP data available using getAdditionalUserInfo(result)
+//     // ...
+//   }).catch((error) => {
+//     // Handle Errors here.
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // The email of the user's account used.
+//     const email = error.customData.email;
+//     // The AuthCredential type that was used.
+//     const credential = GoogleAuthProvider.credentialFromError(error);
+//     // ...
+//   });
 
 window.myDict = new MyDict();
 window.myDict.restoreFromLocal();
