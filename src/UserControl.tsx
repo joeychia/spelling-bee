@@ -17,9 +17,9 @@ interface UserProps {
 
 const UserControl: React.FC<UserProps> = ({ onUserChanged }) => {
   const [userData, setUserData] = useState<UserData | null>(null);
-
+  const app = window.gApp;
   useEffect(() => {
-    const unsubscribe = getAuth(window.gApp).onAuthStateChanged((user) => {
+    const unsubscribe = getAuth(app).onAuthStateChanged((user) => {
       const uData: UserData = {displayName: user?.displayName, photoURL: user?.photoURL};
       if (user) {
         setUserData(uData);
@@ -35,12 +35,12 @@ const UserControl: React.FC<UserProps> = ({ onUserChanged }) => {
 
   const signIn = () => {
     const provider = new GoogleAuthProvider();
-    const auth = getAuth(window.gApp);
+    const auth = getAuth(app);
     signInWithRedirect(auth, provider);
   };
 
   const signOut = () => {
-    getAuth(window.gApp).signOut();
+    getAuth(app).signOut();
     setUserData(null);
   };
 

@@ -90,5 +90,7 @@ const WordLists: React.FC = () => {
  7) add account support to save myDict and wordLists 
  v 8) schedule words for testing
  v 9) publish to github pages
+ 10) add auth
+ 11) manage word lists
  */
 export default WordLists;
