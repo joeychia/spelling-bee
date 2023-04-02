@@ -179,7 +179,7 @@ function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/wordlists" />}  />
-        <Route path="/wordlists" element={<WordLists />} />
+        <Route path="/wordlists" element={<WordLists user={user}/>} />
         <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
         <Route path="/signin" element={<UserControl onUserChanged={()=>{}} />} />
         <Route path="/admin/manage-sentence" element={<ManageSentence user={user} />} />

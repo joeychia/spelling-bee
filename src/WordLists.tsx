@@ -29,6 +29,8 @@ import ReviewWords from "./ReviewWords";
 import bee from "./bee.png";
 import HowDoesItWork from "./HowDoesItWork";
 import UserControl from "./UserControl";
+import { User } from "firebase/auth";
+import ManageWordLists from "./ManageWordLists";
 
 window.gWordLists = [
   { name: "1st Grade", words: list1 },
@@ -52,7 +54,10 @@ const Header: React.FC = () => {
     </div>
   );
 };
-const WordLists: React.FC = () => {
+interface Props {
+  user: User | null;
+}
+const WordLists = ({user}:Props) => {
   const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
   const reviewWordDict = window.gReviewWords || {};
   const date = new Date().toISOString().slice(0, 10);
@@ -75,6 +80,7 @@ const WordLists: React.FC = () => {
         ))}
       </ul>
       {/* <ReviewWords /> */}
+      {user && <ManageWordLists userId={user.uid} />}
       <HowDoesItWork />
     </div>
   );
@@ -84,13 +90,14 @@ const WordLists: React.FC = () => {
  v 1) Import and Export myDict 
  v 2) import the lists into global variable and use it in the wordlist page 
  v 3) polish design 
- x 4) test on ipad (speech recognition not working)
+ v 4) test on ipad (speech recognition not working)
  v 5) skip mastered words in test 
  v 6) show word score on wordlist page 
  7) add account support to save myDict and wordLists 
  v 8) schedule words for testing
  v 9) publish to github pages
- 10) add auth
+ v 10) add auth
  11) manage word lists
+ v 12) manage sentences list
  */
 export default WordLists;

@@ -1,5 +1,8 @@
 /* Create a React component ManageSentence in TypeScript. The route is /admin/manage-sentence. It can access Firebase realtime database under "/sentences", where the key is a word, value is a sentence. Initially it shows the count of items and a search box. User can search a word and see the sentence if found in the database. User can add a new item, where the sentence length is between 1 and 200. User can also add items in bulk in a text input area, where it accept a JSON blob. The JSON format is {<word1>: <sentence1>, <word2>: <sentence2>,...}. It should show the format below the text input area and validate the input. If the input is valid, write all of them to the database, and override existing items if any.
-
+For each word in the list (in JSON format), find an example sentence for them that contains the word. The sentence should be easy to understand by elementary student. 
+Output format to {<word>: <sentence>}
+Input: ["get","old","hen","now","fell","barn","step","too","find","cape","eat","take","shed","how","ride","wall","baby","note","hunt","slid","made","show","into","spots","ring","such","most","here","gate","mine","deep","glow","love","coin","stone","them","plane","stay","coal","was","sunny","toes","soon","nice","going","door","clams","kitten","garden","cord","arms","west","team","skim","belly","hire","wink","move","aid","rose","deck","bead","hurt","grins","leaf","spurs","elm","foot","bank","paws","oak","drive","alone","frogs","dew","paste","unkind","person","nearly","lower","walk","obey","winner","pilot","fresh","roof","flying","bitter","south","stack","panda","slumber","gall","wishes","missing","pretend","nodded","change","once"]
+Let do the first 30 words.
 */
 
 import React, { useEffect, useState } from 'react';

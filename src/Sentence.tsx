@@ -5,7 +5,7 @@ Add a cache to the sentence so next time the button is called, if the sentence h
 
 
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import './Sentence.css';
@@ -28,7 +28,9 @@ const Sentence: React.FC<SentenceProps> = ({ word }) => {
   );
   const [isPlaying, setIsPlaying] = useState(false);
   const NOT_FOUND = '-404-';
-
+  useEffect(() => {
+    setSentence(sentenceCache[word] || null);
+  }, [word]);
   const readSentence = async (sentence: string) => {
     const utterance = new SpeechSynthesisUtterance(sentence);
     setIsPlaying(true);
@@ -48,6 +50,7 @@ const Sentence: React.FC<SentenceProps> = ({ word }) => {
       sentenceCache[word] = data ?? NOT_FOUND;
       setIsLoading(false);
       data && readSentence(data);
+      console.log('Sentence found: ', data);
     });
   }
   const handleButtonClick = async () => {
