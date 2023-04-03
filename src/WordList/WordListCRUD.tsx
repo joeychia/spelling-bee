@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'firebase/database';
-import { getDatabase, off, onValue, ref, set } from 'firebase/database';
+import { Database, getDatabase, off, onValue, ref, set } from 'firebase/database';
 
 type RouteParams = {
   wordlistId: string;
@@ -22,15 +22,7 @@ const WordListCRUD = ({userId}: Props) => {
       return;
     }
     // Create reference to Firebase database
-    const wordListRef = ref(database, `users/${userId}/wordlist/${wordlistId}`);
-
-    // Fetch word list data from Firebase database
-    onValue(wordListRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        setList(data);
-      }
-    });
+    const wordListRef = getWordList(database, userId, wordlistId, setList);
 
     // Detach listener when component unmounts
     return () => {
@@ -59,7 +51,7 @@ const WordListCRUD = ({userId}: Props) => {
 
   const handleDelete = (i: number) => setList(list.filter((_, index) => index !== i));
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value.trim();
     setNewWords(value)
   };
@@ -87,7 +79,7 @@ const WordListCRUD = ({userId}: Props) => {
           <h3>Add Words</h3>
           <h5><small>(single word or multiple words separated by whitespace)</small></h5>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" onChange={handleInputChange} />
+            <textarea className="form-control" onChange={handleInputChange} />
             <button className="btn btn-primary" type="button" onClick={handleAdd}>Add</button>
           </div>
         </div>
@@ -95,5 +87,18 @@ const WordListCRUD = ({userId}: Props) => {
     </div>
   );
 };
+
+export function getWordList(database: Database, userId: string, wordlistId: string | undefined, setList: { (value: SetStateAction<string[]>): void; (arg0: string[]): void; }) {
+  const wordListRef = ref(database, `users/${userId}/wordlist/${wordlistId}`);
+
+  // Fetch word list data from Firebase database
+  onValue(wordListRef, (snapshot) => {
+    const data = snapshot.val() as string[];
+    if (data) {
+      setList(data);
+    }
+  });
+  return wordListRef;
+}
 
 export default WordListCRUD;

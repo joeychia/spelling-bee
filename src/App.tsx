@@ -11,6 +11,7 @@ import ManageSentence from './ManageSentence';
 import { User, getAuth } from 'firebase/auth';
 import UserControl from './UserControl';
 import WordListCRUD from './WordList/WordListCRUD';
+import MyWordList from './WordList/MyWordList';
 
 // Initialize Firebase
 window.gApp = firebaseSingleton.getInstance();
@@ -181,7 +182,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/wordlists" />}  />
         <Route path="/wordlists" element={<WordLists user={user}/>} />
-        <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
+        <Route path="/wordlist/:wordlistId" element={<WordListPage />} />
+        <Route path="/test/:wordlistId" element={<MyWordList userId={user?.uid} />} />
         <Route path="/wordlist/mutate/:wordlistId" element={<WordListCRUD userId={user?.uid}/>} />
         <Route path="/signin" element={<UserControl onUserChanged={()=>{}} />} />
         <Route path="/admin/manage-sentence" element={<ManageSentence user={user} />} />
