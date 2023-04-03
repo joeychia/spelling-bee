@@ -49,6 +49,10 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
       remove(wordListsRef);
       const wordListRef = ref(database, `users/${userId}/wordlist/${id}`);
       remove(wordListRef);
+
+      // Remove the deleted word list from the wordLists state
+      const updatedWordLists = wordLists.filter((wordList) => wordList.id !== id);
+      setWordLists(updatedWordLists);
     }
   };
 
@@ -72,8 +76,9 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
     });
   };
 
-  return (
+  return <div>{wordLists.length > 0 && (
     <div>
+      <h5>My word lists</h5>
       <ul className="list-group">
         {wordLists.map(({ id, name }) => (
           <li key={name} className="list-group-item d-flex justify-content-between align-items-center">
@@ -89,11 +94,11 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
           </li>
         ))}
       </ul>
-      <button className="btn btn-success mt-2" onClick={handleAdd}>
+    </div>)}
+    <button className="btn btn-success mt-2" onClick={handleAdd}>
         Add a new word list
       </button>
     </div>
-  );
 };
 
 export default ManageWordLists;
