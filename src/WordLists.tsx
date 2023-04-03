@@ -3,8 +3,8 @@ Create a React component WordLists in TypeScript.
 The route is "/wordlists".
 The page manages a list of word lists.
 It can display a list of word lists
-Each word list has a name, and a list of words. 
-The word list page /wordlist/:wordlistName has a top bar with a "Back" button. 
+Each word list has a name, and a list of words.
+The word list page /wordlist/:wordlistName has a top bar with a "Back" button.
 */
 
 /*
@@ -24,14 +24,14 @@ import example from "./wordLists/1A.json";
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { WordList } from "./WordListPage";
+import { WordList } from "./WordList/WordListPage";
 import ReviewWords from "./ReviewWords";
 import bee from "./bee.png";
 import HowDoesItWork from "./HowDoesItWork";
 import UserControl from "./UserControl";
 import { User } from "firebase/auth";
-import ManageWordLists from "./ManageWordLists";
-import WordListCRUD from "./WordListCRUD";
+import ManageWordLists from "./WordList/ManageWordLists";
+import WordListCRUD from "./WordList/WordListCRUD";
 
 window.gWordLists = [
   { name: "1st Grade", words: list1 },
@@ -82,20 +82,19 @@ const WordLists = ({user}:Props) => {
       </ul>
       {/* <ReviewWords /> */}
       {user && <ManageWordLists userId={user.uid} />}
-      <WordListCRUD wordList={[]} onSaveHandler={(list)=>{alert(list)}}/>
       <HowDoesItWork />
     </div>
   );
 };
 
 /* TODO:
- v 1) Import and Export myDict 
- v 2) import the lists into global variable and use it in the wordlist page 
- v 3) polish design 
+ v 1) Import and Export myDict
+ v 2) import the lists into global variable and use it in the wordlist page
+ v 3) polish design
  v 4) test on ipad (speech recognition not working)
- v 5) skip mastered words in test 
- v 6) show word score on wordlist page 
- 7) add account support to save myDict and wordLists 
+ v 5) skip mastered words in test
+ v 6) show word score on wordlist page
+ 7) add account support to save myDict and wordLists
  v 8) schedule words for testing
  v 9) publish to github pages
  v 10) add auth

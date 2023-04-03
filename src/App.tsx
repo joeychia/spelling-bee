@@ -4,12 +4,13 @@ import './App.css';
 import { MyDict } from './MyDict';
 import { BrowserRouter, HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import WordLists from './WordLists';
-import WordListPage from './WordListPage';
+import WordListPage from './WordList/WordListPage';
 import { ReviewDict } from './ReviewDict';
 import { firebaseSingleton } from './FirebaseAppSingleton';
 import ManageSentence from './ManageSentence';
 import { User, getAuth } from 'firebase/auth';
 import UserControl from './UserControl';
+import WordListCRUD from './WordList/WordListCRUD';
 
 // Initialize Firebase
 window.gApp = firebaseSingleton.getInstance();
@@ -181,6 +182,7 @@ function App() {
         <Route path="/" element={<Navigate to="/wordlists" />}  />
         <Route path="/wordlists" element={<WordLists user={user}/>} />
         <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
+        <Route path="/wordlist/mutate/:wordlistId" element={<WordListCRUD userId={user?.uid}/>} />
         <Route path="/signin" element={<UserControl onUserChanged={()=>{}} />} />
         <Route path="/admin/manage-sentence" element={<ManageSentence user={user} />} />
       </Routes>
@@ -255,4 +257,3 @@ function App() {
 }
 
 export default App;
-
