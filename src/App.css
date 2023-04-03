@@ -208,3 +208,9 @@ h1 {
     transform: translate3d(4px, 0, 0);
   }
 }
+
+.grid-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}

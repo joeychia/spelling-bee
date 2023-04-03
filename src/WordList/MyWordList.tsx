@@ -1,8 +1,6 @@
 import { getDatabase, off, onValue, ref } from 'firebase/database';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ReviewDict, ReviewType } from '../ReviewDict';
-import TestWordList from '../TestWordList';
 import { getWordList } from './WordListCRUD';
 
 export interface WordList {
@@ -15,11 +13,7 @@ interface Props {
 const MyWordList = ({userId}: Props) => {
   const { wordlistId } = useParams<{ wordlistId: string }>();
 
-  const [isTesting, setIsTesting] = useState(false); // Add state and default value
   const [wordListName, setWordListName] = useState("");
-  const [reviewWords, setReviewWords] = useState([] as ReviewType[]); // Add state and default value
-  // const [list, setList] = useState([] as string[]); // Add state and default value
-  // const [wordList, setWordList] = useState({} as WordList); // Add state and default value
   const [wordList, setWordList] = useState([] as string[]); // Add state and default value
   const app = window.gApp;
   const database = getDatabase(app);
@@ -57,12 +51,11 @@ const MyWordList = ({userId}: Props) => {
   }
 
   return (
-     <div className='page-container'>
-
+    <div className='page-container'>
       <h2>{wordListName}</h2>
-
-      <ul className='list-group mt-2 mb-2'>
-        {wordList.map((word) => (window.myDict.getWordScore(word) > 100 ?
+      <ul className='grid-list list-group mt-2 mb-2'>
+        {wordList.map((word) => (
+          window.myDict.getWordScore(word) > 100 ?
           <li className='list-group-item' key={word}><del>{word} {window.myDict.getWordScore(word)}</del></li> :
           <li className='list-group-item' key={word}>{word} {window.myDict.getWordScore(word)}</li>
         ))}
@@ -70,7 +63,8 @@ const MyWordList = ({userId}: Props) => {
       <h2>
         <Link to="/wordlists">&#128281;</Link>
       </h2>
-    </div>);
+    </div>
+  );
 };
 
 export default MyWordList;
