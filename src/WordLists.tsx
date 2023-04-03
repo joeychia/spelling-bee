@@ -31,6 +31,7 @@ import HowDoesItWork from "./HowDoesItWork";
 import UserControl from "./UserControl";
 import { User } from "firebase/auth";
 import ManageWordLists from "./ManageWordLists";
+import WordListCRUD from "./WordListCRUD";
 
 window.gWordLists = [
   { name: "1st Grade", words: list1 },
@@ -81,6 +82,7 @@ const WordLists = ({user}:Props) => {
       </ul>
       {/* <ReviewWords /> */}
       {user && <ManageWordLists userId={user.uid} />}
+      <WordListCRUD wordList={[]} onSaveHandler={(list)=>{alert(list)}}/>
       <HowDoesItWork />
     </div>
   );
