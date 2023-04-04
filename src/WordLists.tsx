@@ -49,7 +49,6 @@ const Header: React.FC = () => {
           </h1>
         </div>
       </div>
-      {/* <h2>Pick a word list to test</h2> */}
     </div>
   );
 };
@@ -87,7 +86,7 @@ const WordLists = ({user}:Props) => {
  v 4) test on ipad (speech recognition not working)
  v 5) skip mastered words in test
  v 6) show word score on wordlist page
- 7) add account support to save myDict and wordLists
+ v 7) add account support to save myDict and wordLists
  v 8) schedule words for testing
  v 9) publish to github pages
  v 10) add auth

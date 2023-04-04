@@ -1,10 +1,8 @@
 /* Create a React component User in Typescript. It contains a sign in button that redirects to Google sign in page. Once signed in, the button becomes sign out, and show user name and profile icon. It has a callback function to pass the user data to parent component. The component should be both mobile and desktop friendly.
 */
 
-// src/components/User.tsx
 import React, { useEffect, useState } from 'react';
-import './UserControl.css'; 
-// import firebase from 'firebase/compat';
+import './UserControl.css';
 import {signOut as signOutAuth, GoogleAuthProvider, getAuth, signInWithRedirect, User } from 'firebase/auth';
 interface UserData {
   displayName?: string | null;

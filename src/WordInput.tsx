@@ -1,8 +1,8 @@
 /* //create a react component InputWord in TypeScript that uses speechRecognition api.
 The input is a word.
-When user clicks "Listen" button, the component will listen to voice input.  
+When user clicks "Listen" button, the component will listen to voice input.
 Then reconstruct the recognized string. The string is consisted of many tokens separated by space, keep single letter tokens only and concatenate them into one word. Then show it in a box.
-If the new word matches the original word (ignoring case), put a green check mark on its right; If the new word doesn't match, highlight the matched part in green and the rest in red, and show the original word below it. 
+If the new word matches the original word (ignoring case), put a green check mark on its right; If the new word doesn't match, highlight the matched part in green and the rest in red, and show the original word below it.
 When user clicks the "Listen" button again, reset the component state and start over to listen..
 
 
@@ -10,10 +10,7 @@ Create an inputbox in React typescript. It should have a microphone button on th
 */
 
 import React, { useEffect, useState } from 'react';
-import WordDiff from './WordDiff';
 import './WordInput.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 type InputWordProps = {
   word: string;
@@ -24,14 +21,12 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const [listening, setListening] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [recognized, setRecognized] = useState('');
-  const [matching, setMatching] = useState(false);
   useEffect(() => {
     // Reset the states when the input prop updates
     setListening(false);
     setRecognized('');
-    setMatching(false);
   }, [word]);
-  
+
   const recognition = new window.webkitSpeechRecognition();
   recognition.continuous = false;
   recognition.lang = 'en-US';
@@ -39,7 +34,6 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const startListening = () => {
     setListening(true);
     setRecognized('');
-    setMatching(false);
     recognition.start();
   };
 
@@ -60,7 +54,6 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
       .toLowerCase();
     setRecognized(newWord);
     if (newWord.toLowerCase() === word.toLowerCase()) {
-      setMatching(true);
       successHandler?.();
     } else {
       shakeInputBox();
@@ -78,12 +71,11 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       if (recognized.toLowerCase() === word.toLowerCase()) {
-        setMatching(true);
         successHandler?.();
       } else {
         shakeInputBox();
       }
-    } 
+    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,19 +92,9 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   }
   return (
     <div className='input-area mt-1 d-inline-flex'>
-     
+
       <input type="text" id="spelling-input" className={shaking?"shake":""} placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
       <button id="record-btn" className="microphone-icon"  onPointerDown={startListening} onPointerUp={stopListening} ></button>
-      {/* {recognized && (
-        <div style={{ marginTop: '1rem' }}>
-          {matching ? (
-            <span style={{ color: 'green', marginRight: '0.5rem' }}>&#10004;</span>
-          ) : (
-            <span>Your incorrect spelling: <WordDiff firstWord={word} secondWord={recognized} /></span>
-            
-          )}
-        </div>
-      )} */}
     </div>
   );
 };
