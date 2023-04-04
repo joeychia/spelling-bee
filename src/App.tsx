@@ -61,7 +61,10 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
-      user && window.myDict.restoreFromDatabase(user.uid, getDatabase(window.gApp));
+      if (user) {
+        window.myDict.restoreFromDatabase(user.uid, getDatabase(window.gApp));
+        window.gReviewWords.restoreFromDatabase(user.uid, getDatabase(window.gApp));
+      }
     });
     return unsubscribe;
   }, [auth]);
@@ -184,7 +187,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/wordlists" />}  />
         <Route path="/wordlists" element={<WordLists user={user}/>} />
-        <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
+        <Route path="/wordlist/:wordlistName" element={<WordListPage userId={user?.uid} />} />
         <Route path="/test/:wordlistId" element={<MyWordList userId={user?.uid} />} />
         <Route path="/wordlist/mutate/:wordlistId" element={<WordListCRUD userId={user?.uid}/>} />
         <Route path="/signin" element={<UserControl onUserChanged={()=>{}} />} />

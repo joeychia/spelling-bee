@@ -90,8 +90,10 @@ export interface Word {
         const data = snapshot.val() as string;
         if (data) {
           const dictEntries = JSON.parse(data) as [string, Word][];
-          this.dict = new Map(dictEntries);
-          console.log(`Test result is restored from database: ${data}`);
+          if (dictEntries.length > 0) {
+            this.dict = new Map(dictEntries);
+            console.log(`Test result is restored from database: ${data}`);
+          }
         }
       });
 

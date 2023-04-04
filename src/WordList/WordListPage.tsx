@@ -1,34 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { FaArrowLeft, FaBackspace, FaBackward } from 'react-icons/fa';
+import { getDatabase } from 'firebase/database';
+import { useEffect, useState } from 'react';
+import { FaArrowLeft} from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
-import { ReviewDict, ReviewType } from '../ReviewDict';
 import TestWordList from '../TestWordList';
 
 export interface WordList {
   name: string;
   words: string[];
 }
-
-const WordListPage: React.FC = () => {
+interface Props {
+  userId: string|undefined;
+}
+const WordListPage = ({userId}: Props) => {
   const { wordlistName } = useParams<{ wordlistName: string }>();
 
   const [isTesting, setIsTesting] = useState(false); // Add state and default value
-  const [reviewWords, setReviewWords] = useState([] as ReviewType[]); // Add state and default value
-  const [reviewList, setReviewList] = useState([] as string[]); // Add state and default value
   const [wordList, setWordList] = useState({} as WordList); // Add state and default value
-
+  const database = getDatabase(window.gApp);
   useEffect(() => {
     setIsTesting(false);
     if (wordlistName==="review-today") {
       const reviewWordDict = window.gReviewWords || {};
       const date = new Date().toISOString().slice(0, 10)
-      // const toReview = reviewWordDict.getWordInfoOnDate(date);
       const words = reviewWordDict.getWordsOnDate(date) as Set<string>;
       const reviewWordList = {name: "Review today", words: Array.from(words)};
       setWordList(reviewWordList);
-      // setReviewList(Array.from(words));
-      // setReviewWords(toReview||[]);
-      // setReviewList(words);
     } else {
       const foundList = window.gWordLists.find((list) => list.name === wordlistName);
       if (foundList) {
@@ -47,6 +43,10 @@ const WordListPage: React.FC = () => {
     setIsTesting(false);
     window.myDict.saveToLocal();
     window.gReviewWords.save();
+    if (userId && database) {
+      window.myDict.saveToDatabase(userId, database);
+      window.gReviewWords.saveToDatabase(userId, database);
+    }
   };
 
   if (!wordList || !wordList.words) {

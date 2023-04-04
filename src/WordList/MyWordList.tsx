@@ -1,7 +1,7 @@
 import { getDatabase, off, onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import TestWordList from '../TestWordList';
 import { getWordList } from './WordListCRUD';
 
@@ -20,7 +20,6 @@ const MyWordList = ({userId}: Props) => {
   const [wordList, setWordList] = useState([] as string[]); // Add state and default value
   const app = window.gApp;
   const database = getDatabase(app);
-  const navigate = useNavigate();
   useEffect(() => {
     if (!userId) {
       return;
@@ -58,8 +57,11 @@ const MyWordList = ({userId}: Props) => {
   const handleEndTest = () => {
     setIsTesting(false);
     window.myDict.saveToLocal();
-    userId && database && window.myDict.saveToDatabase(userId, database);
     window.gReviewWords.save();
+    if (userId && database) {
+      window.myDict.saveToDatabase(userId, database);
+      window.gReviewWords.saveToDatabase(userId, database);
+    }
   };
 
   return (

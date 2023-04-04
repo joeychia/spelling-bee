@@ -1,3 +1,6 @@
+import { Database, set, ref, onValue } from "firebase/database";
+import { Word } from "./MyDict";
+
 /*
 Create a typescript class ReviewDict. The key is date. The value is a set of unique words.
 Each words has an associated listName, and all reviewed dates.
@@ -8,8 +11,8 @@ The class has a method to get associated listNames and all reviewed dates of all
 */
 export interface ReviewType {
   word: string;
-  listName: string;
-  reviewedDates: string[]
+  // listName: string;
+  // reviewedDates: string[]
 }
 
 export interface ReviewWordDict {
@@ -30,9 +33,9 @@ export class ReviewDict {
     const todayPlus3 = new Date(today.getTime() + 86400000*3).toISOString().slice(0,10);
     const todayPlus7 = new Date(today.getTime() + 86400000*7).toISOString().slice(0,10);
     this.addWordOnDate(todayString, word, listName, todayString);
-    this.addWordOnDate(todayPlus1, word, listName, todayPlus1);
-    this.addWordOnDate(todayPlus3, word, listName, todayPlus3);
-    this.addWordOnDate(todayPlus7, word, listName, todayPlus7);
+    this.addWordOnDate(todayPlus1, word, listName, todayString);
+    this.addWordOnDate(todayPlus3, word, listName, todayString);
+    this.addWordOnDate(todayPlus7, word, listName, todayString);
   }
   public addWordOnDate(date: string, word: string, listName: string, reviewedDate: string): void {
     let wordInfoArr = this.data[date];
@@ -43,10 +46,8 @@ export class ReviewDict {
     }
 
     const wordIndex = wordInfoArr.findIndex(w => w.word === word);
-    if (wordIndex !== -1) {
-      wordInfoArr[wordIndex].reviewedDates.indexOf(reviewedDate) === -1 && wordInfoArr[wordIndex].reviewedDates.push(reviewedDate);
-    } else {
-      wordInfoArr.push({ word, listName, reviewedDates: [reviewedDate] });
+    if (wordIndex === -1) {
+      wordInfoArr.push({ word });
     }
   }
 
@@ -69,5 +70,24 @@ export class ReviewDict {
   public save(): void {
     localStorage.setItem("reviewDict", JSON.stringify(this.data));
   }
-  
+
+  public saveToDatabase(userId: string, db: Database): void {
+    const reviewList = JSON.stringify(this.data);
+    set(ref(db, `users/${userId}/reviewlist/`), reviewList).then(()=> {
+      console.log(`Review list is saved to database: ${reviewList}`)
+    });
+  }
+
+  public restoreFromDatabase(userId: string, db: Database): void {
+    const reviewListRef = ref(db, `users/${userId}/reviewlist`);
+
+    onValue(reviewListRef, (snapshot) => {
+      const data = snapshot.val() as string;
+      if (data) {
+        this.data = data ? JSON.parse(data) : {} as ReviewWordDict;
+        console.log(`Review list is restored from database: ${data}`);
+      }
+    });
+
+  }
 }

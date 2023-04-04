@@ -11,10 +11,9 @@ import React, { useState, useEffect } from 'react';
 import { getDatabase, off, onValue, ref, remove, set } from 'firebase/database';
 import { FaTrash, FaEdit, FaPlusSquare, FaPlus } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import ReviewWords from '../ReviewWords';
 
 type ManageWordListsProps = {
-  userId: string;
+  userId?: string;
 }
 
 interface WordList {
@@ -32,19 +31,27 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
   const database = getDatabase(app);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
     const wordListsRef = ref(database, `users/${userId}/wordlists`);
     onValue(wordListsRef, (snapshot) => {
       const wordListsObj = snapshot.val();
-      const wordListsArr = Object.keys(wordListsObj).map((key) => ({
-        id: key,
-        name: wordListsObj[key],
-      }));
-      setWordLists(wordListsArr);
+      if (wordListsObj) {
+        const wordListsArr = Object.keys(wordListsObj).map((key) => ({
+          id: key,
+          name: wordListsObj[key],
+        }));
+        setWordLists(wordListsArr);
+      }
     });
     return () => off(wordListsRef);
   }, [userId]);
 
   const handleDelete = (id: string) => {
+    if (!userId) {
+      return;
+    }
     if (window.confirm('Are you sure you want to delete this word list?')) {
       const wordListsRef = ref(database, `users/${userId}/wordlists/${id}`);
       remove(wordListsRef);
@@ -63,6 +70,9 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
   };
 
   const handleAdd = () => {
+    if (!userId) {
+      return;
+    }
     const wordListName = window.prompt('Enter the name of the new word list:');
     if (!wordListName) {
       return;
@@ -84,7 +94,7 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
       <ul className="list-group">
         <li key="mywordlist" className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
           My word lists
-          <button className="btn btn-success btn-sm mx-1" onClick={handleAdd}>
+          <button className="btn btn-success btn-sm mx-1" disabled={!userId} onClick={handleAdd}>
               <FaPlus />
           </button>
         </li>

@@ -25,13 +25,11 @@ import example from "./wordLists/1A.json";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { WordList } from "./WordList/WordListPage";
-import ReviewWords from "./ReviewWords";
 import bee from "./bee.png";
 import HowDoesItWork from "./HowDoesItWork";
 import UserControl from "./UserControl";
 import { User } from "firebase/auth";
 import ManageWordLists from "./WordList/ManageWordLists";
-import WordListCRUD from "./WordList/WordListCRUD";
 
 window.gWordLists = [
   { name: "1st Grade", words: list1 },
@@ -64,7 +62,7 @@ const WordLists = ({user}:Props) => {
   return (
     <div className="page-container">
       <Header />
-      {user && <ManageWordLists userId={user.uid} />}
+      <ManageWordLists userId={user?.uid} />
       <ul className="list-group">
         <li key="mywordlist" className="list-group-item list-group-item-success">
           Public word lists
