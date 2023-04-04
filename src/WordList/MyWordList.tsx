@@ -58,6 +58,7 @@ const MyWordList = ({userId}: Props) => {
   const handleEndTest = () => {
     setIsTesting(false);
     window.myDict.saveToLocal();
+    userId && database && window.myDict.saveToDatabase(userId, database);
     window.gReviewWords.save();
   };
 
@@ -73,9 +74,6 @@ const MyWordList = ({userId}: Props) => {
           <li className='list-group-item' key={word}>{word} {window.myDict.getWordScore(word)}</li>
         ))}
       </ul>
-      <h2>
-        <Link to="/wordlists">&#128281;</Link>
-      </h2>
     </div>):
     <div>
         <TestWordList words={wordList} listName={wordListName} exitHandler = {handleEndTest} />

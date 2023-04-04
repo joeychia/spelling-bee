@@ -1,3 +1,4 @@
+import { getDatabase } from 'firebase/database';
 import React, { useEffect, useState } from 'react';
 import { ReviewType, ReviewDict } from './ReviewDict';
 import TestWordList from './TestWordList';
@@ -20,7 +21,7 @@ const ReviewWords: React.FC = () => {
     setWordList(Array.from(words));
     setReviewWords(toReview||[]);
   }, []);
-  
+
   const handleStartTest = () => {
     setIsTesting(true);
   };
@@ -28,6 +29,8 @@ const ReviewWords: React.FC = () => {
   const handleEndTest = () => {
     setIsTesting(false);
     window.myDict.saveToLocal();
+    const database = getDatabase(window.gApp);
+    // userId && database && window.myDict.saveToDatabase(userId, database);
     reviewWordDict.save();
   };
 
@@ -38,7 +41,7 @@ const ReviewWords: React.FC = () => {
   return (
     !isTesting ? (<div>
       {wordList.length > 0&&<button className="test-btn" onClick={handleStartTest}>Review {wordList.length} words</button> }
-      
+
       <ul className='list-group'>
         {reviewWords.map((word) => (
           <li className='list-group-item' key={word.word}>{word.word}: {window.myDict?.getWordScore(word.word)} from {word.listName}, reviewed on {Array.from(word.reviewedDates)} </li>

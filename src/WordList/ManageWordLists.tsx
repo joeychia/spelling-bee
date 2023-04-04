@@ -11,6 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { getDatabase, off, onValue, ref, remove, set } from 'firebase/database';
 import { FaTrash, FaEdit, FaPlusSquare, FaPlus } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import ReviewWords from '../ReviewWords';
 
 type ManageWordListsProps = {
   userId: string;
@@ -75,8 +76,10 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
       navigate(`/wordlist/mutate/${wordListId}`);
     });
   };
-
-  return <div>{wordLists.length > 0 && (
+  const reviewWordDict = window.gReviewWords || {};
+  const date = new Date().toISOString().slice(0, 10);
+  const toReview = reviewWordDict.getWordInfoOnDate(date);
+  return <div>{(wordLists.length > 0 || toReview.length > 0 )&& (
     <div className="mb-3">
       <ul className="list-group">
         <li key="mywordlist" className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
@@ -85,6 +88,12 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
               <FaPlus />
           </button>
         </li>
+        {toReview.length > 0 && (
+          <li className="list-group-item" key="review-today">
+            <Link to={`/wordlist/review-today`}>Review Today</Link>{" "}<span className="label label-default">{toReview.length}</span>
+
+          </li>
+        )}
         {wordLists.map(({ id, name }) => (
           <li key={name} className="list-group-item d-flex justify-content-between align-items-center">
             <Link to={`/test/${id}`}>{name}</Link>

@@ -12,6 +12,7 @@ import { User, getAuth } from 'firebase/auth';
 import UserControl from './UserControl';
 import WordListCRUD from './WordList/WordListCRUD';
 import MyWordList from './WordList/MyWordList';
+import { getDatabase } from 'firebase/database';
 
 // Initialize Firebase
 window.gApp = firebaseSingleton.getInstance();
@@ -60,6 +61,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
+      user && window.myDict.restoreFromDatabase(user.uid, getDatabase(window.gApp));
     });
     return unsubscribe;
   }, [auth]);

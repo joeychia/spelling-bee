@@ -60,9 +60,7 @@ interface Props {
 }
 const WordLists = ({user}:Props) => {
   const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
-  const reviewWordDict = window.gReviewWords || {};
-  const date = new Date().toISOString().slice(0, 10);
-  const toReview = reviewWordDict.getWordInfoOnDate(date);
+
   return (
     <div className="page-container">
       <Header />
@@ -71,12 +69,7 @@ const WordLists = ({user}:Props) => {
         <li key="mywordlist" className="list-group-item list-group-item-success">
           Public word lists
         </li>
-        {toReview.length > 0 && (
-          <li className="list-group-item" key="review-today">
-            <Link to={`/wordlist/review-today`}>Review Today</Link>{" "}
-            {toReview.length}
-          </li>
-        )}
+
         {wordLists.map((wordList) => (
           <li className="list-group-item" key={wordList.name}>
             <Link to={`/wordlist/${wordList.name}`}>{wordList.name}</Link>{" "}
@@ -84,7 +77,6 @@ const WordLists = ({user}:Props) => {
           </li>
         ))}
       </ul>
-      {/* <ReviewWords /> */}
       <HowDoesItWork />
     </div>
   );
