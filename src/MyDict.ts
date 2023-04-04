@@ -91,7 +91,7 @@ export interface Word {
         if (data) {
           const dictEntries = JSON.parse(data) as [string, Word][];
           this.dict = new Map(dictEntries);
-          console.log(`Test result is restored from database: ${this.dict}`);
+          console.log(`Test result is restored from database: ${data}`);
         }
       });
 
