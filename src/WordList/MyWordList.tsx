@@ -1,6 +1,8 @@
 import { getDatabase, off, onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import TestWordList from '../TestWordList';
 import { getWordList } from './WordListCRUD';
 
 export interface WordList {
@@ -12,6 +14,7 @@ interface Props {
 }
 const MyWordList = ({userId}: Props) => {
   const { wordlistId } = useParams<{ wordlistId: string }>();
+  const [isTesting, setIsTesting] = useState(false); // Add state and default value
 
   const [wordListName, setWordListName] = useState("");
   const [wordList, setWordList] = useState([] as string[]); // Add state and default value
@@ -49,10 +52,20 @@ const MyWordList = ({userId}: Props) => {
   if (!wordList || wordList.length < 1) {
     return <div>Word list not found.</div>;
   }
+  const handleStartTest = () => {
+    setIsTesting(true);
+  };
+  const handleEndTest = () => {
+    setIsTesting(false);
+    window.myDict.saveToLocal();
+    window.gReviewWords.save();
+  };
 
   return (
-    <div className='page-container'>
-      <h2>{wordListName}</h2>
+    !isTesting ? (<div className='page-container'>
+      <h2 className='d-flex align-items-center'><Link to="/wordlists"><FaArrowLeft /></Link>{wordListName}</h2>
+
+      <button className="btn btn-primary btn-lg" onClick={handleStartTest}>Start test</button>
       <ul className='grid-list list-group mt-2 mb-2'>
         {wordList.map((word) => (
           window.myDict.getWordScore(word) > 100 ?
@@ -63,6 +76,9 @@ const MyWordList = ({userId}: Props) => {
       <h2>
         <Link to="/wordlists">&#128281;</Link>
       </h2>
+    </div>):
+    <div>
+        <TestWordList words={wordList} listName={wordListName} exitHandler = {handleEndTest} />
     </div>
   );
 };

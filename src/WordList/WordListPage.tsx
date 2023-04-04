@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaArrowLeft, FaBackspace, FaBackward } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
 import { ReviewDict, ReviewType } from '../ReviewDict';
 import TestWordList from '../TestWordList';
@@ -55,17 +56,17 @@ const WordListPage: React.FC = () => {
   return (
     !isTesting ? (<div className='page-container'>
 
-      <h2>{wordList.name}</h2>
+      <h2 className='d-flex align-items-center'><Link to="/wordlists"><FaArrowLeft /></Link>{wordList.name}</h2>
       <button className="btn btn-primary btn-lg" onClick={handleStartTest}>Start test</button>
 
-      <ul className='list-group mt-2 mb-2'>
+      <ul className='grid-list list-group mt-2 mb-2'>
         {wordList.words.map((word) => (window.myDict.getWordScore(word) > 100 ?
           <li className='list-group-item' key={word}><del>{word} {window.myDict.getWordScore(word)}</del></li> :
           <li className='list-group-item' key={word}>{word} {window.myDict.getWordScore(word)}</li>
         ))}
       </ul>
       <h2>
-        <Link to="/wordlists">&#128281;</Link>
+
       </h2>
     </div>) :
     <div>

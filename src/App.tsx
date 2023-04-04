@@ -182,7 +182,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/wordlists" />}  />
         <Route path="/wordlists" element={<WordLists user={user}/>} />
-        <Route path="/wordlist/:wordlistId" element={<WordListPage />} />
+        <Route path="/wordlist/:wordlistName" element={<WordListPage />} />
         <Route path="/test/:wordlistId" element={<MyWordList userId={user?.uid} />} />
         <Route path="/wordlist/mutate/:wordlistId" element={<WordListCRUD userId={user?.uid}/>} />
         <Route path="/signin" element={<UserControl onUserChanged={()=>{}} />} />
