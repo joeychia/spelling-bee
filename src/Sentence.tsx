@@ -1,4 +1,4 @@
-/* Create a Sentence component in React Typescript. The input is a word. It initially shows a button "Sentence". When clicked, it replaces the text with a spinner in the button, and start to fetch sentence from Firebase realtime database with "sentences/${word}". When result comes back, read it aloud, and replace the spinner with a voice animation indicating there's audio playing until the end of playing. Then change it back to "Sentence" on the button. 
+/* Create a Sentence component in React Typescript. The input is a word. It initially shows a button "Sentence". When clicked, it replaces the text with a spinner in the button, and start to fetch sentence from Firebase realtime database with "sentences/${word}". When result comes back, read it aloud, and replace the spinner with a voice animation indicating there's audio playing until the end of playing. Then change it back to "Sentence" on the button.
 After loading, replace spinner with a voice animation on the button, until the audio play completes.
 
 Add a cache to the sentence so next time the button is called, if the sentence had been fetched before, it doesn't need to fetch it again.
@@ -33,6 +33,7 @@ const Sentence: React.FC<SentenceProps> = ({ word }) => {
   }, [word]);
   const readSentence = async (sentence: string) => {
     const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.rate = 0.8;
     setIsPlaying(true);
     utterance.onend = () => {
         setIsPlaying(false);
