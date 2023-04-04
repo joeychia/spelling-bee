@@ -51,7 +51,7 @@ const Header: React.FC = () => {
           </h1>
         </div>
       </div>
-      <h2>Pick a word list to test</h2>
+      {/* <h2>Pick a word list to test</h2> */}
     </div>
   );
 };
@@ -66,7 +66,11 @@ const WordLists = ({user}:Props) => {
   return (
     <div className="page-container">
       <Header />
+      {user && <ManageWordLists userId={user.uid} />}
       <ul className="list-group">
+        <li key="mywordlist" className="list-group-item list-group-item-success">
+          Public word lists
+        </li>
         {toReview.length > 0 && (
           <li className="list-group-item" key="review-today">
             <Link to={`/wordlist/review-today`}>Review Today</Link>{" "}
@@ -81,7 +85,6 @@ const WordLists = ({user}:Props) => {
         ))}
       </ul>
       {/* <ReviewWords /> */}
-      {user && <ManageWordLists userId={user.uid} />}
       <HowDoesItWork />
     </div>
   );
@@ -98,7 +101,7 @@ const WordLists = ({user}:Props) => {
  v 8) schedule words for testing
  v 9) publish to github pages
  v 10) add auth
- 11) manage word lists
+ v 11) manage word lists
  v 12) manage sentences list
  */
 export default WordLists;

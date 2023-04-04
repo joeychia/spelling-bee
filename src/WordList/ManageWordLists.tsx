@@ -9,7 +9,7 @@ Use a component placeholder for adding and modifying a word list for now.
 
 import React, { useState, useEffect } from 'react';
 import { getDatabase, off, onValue, ref, remove, set } from 'firebase/database';
-import { FaTrash, FaEdit } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaPlusSquare, FaPlus } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 
 type ManageWordListsProps = {
@@ -77,9 +77,14 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
   };
 
   return <div>{wordLists.length > 0 && (
-    <div>
-      <h5>My word lists</h5>
+    <div className="mb-3">
       <ul className="list-group">
+        <li key="mywordlist" className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
+          My word lists
+          <button className="btn btn-success btn-sm mx-1" onClick={handleAdd}>
+              <FaPlus />
+          </button>
+        </li>
         {wordLists.map(({ id, name }) => (
           <li key={name} className="list-group-item d-flex justify-content-between align-items-center">
             <Link to={`/test/${id}`}>{name}</Link>
@@ -95,9 +100,7 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
         ))}
       </ul>
     </div>)}
-    <button className="btn btn-success mt-2" onClick={handleAdd}>
-        Add a new word list
-      </button>
+
     </div>
 };
 
