@@ -8,8 +8,7 @@ Let do the first 30 words.
 import React, { useEffect, useState } from 'react';
 import 'firebase/database';
 import { getDatabase, ref, set } from 'firebase/database';
-import { GoogleAuthProvider, User, getAuth, signInWithRedirect } from 'firebase/auth';
-import { redirect, useNavigate  } from 'react-router-dom';
+import { User } from 'firebase/auth';
 import UserControl from './UserControl';
 
 interface Sentence {

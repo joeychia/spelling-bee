@@ -1,6 +1,6 @@
 {
   "name": "spelling-made-ez",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://spelling-made-ez.web.app/",
   "dependencies": {
@@ -20,14 +20,11 @@
     "firebase": "^9.19.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-drag-reorder": "^1.2.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "react-speech": "^1.0.2",
-    "react-speech-kit": "^3.0.1",
-    "typescript": "^4.8.3",
-    "web-vitals": "^2.1.4"
+    "typescript": "^4.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,7 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@types/react-speech-recognition": "^3.9.1",
     "gh-pages": "^5.0.0"
   }
 }

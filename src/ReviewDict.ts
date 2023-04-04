@@ -1,5 +1,4 @@
 import { Database, set, ref, onValue } from "firebase/database";
-import { Word } from "./MyDict";
 
 /*
 Create a typescript class ReviewDict. The key is date. The value is a set of unique words.

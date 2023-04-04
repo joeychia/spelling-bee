@@ -1,4 +1,4 @@
-/* 
+/*
 Create a React component WordList in TypeScript.
 The input is a list of words, and exitHandler function.
 When mounted, shuffle the list of words.
@@ -34,7 +34,6 @@ type Props = {
 const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
-  const reviewWordDict = window.gReviewWords || {};
 
   useEffect(() => {
     // filter the words that has a score less than 100 in myDict

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import './UserControl.css';
-import {signOut as signOutAuth, GoogleAuthProvider, getAuth, signInWithRedirect, User } from 'firebase/auth';
+import {GoogleAuthProvider, getAuth, signInWithRedirect, User } from 'firebase/auth';
 interface UserData {
   displayName?: string | null;
   photoURL?: string | null;

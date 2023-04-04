@@ -6,7 +6,6 @@ Add a cache to the sentence so next time the button is called, if the sentence h
 
 */
 import React, { useEffect, useState } from 'react';
-import firebase from 'firebase/app';
 import 'firebase/database';
 import './Sentence.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
