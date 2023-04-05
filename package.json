@@ -2,7 +2,7 @@
   "name": "spelling-made-ez",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://spelling-made-ez.web.app/",
+  "homepage": "https://spelling-made-ez.firebaseapp.com/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",

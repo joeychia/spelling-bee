@@ -34,6 +34,7 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
     // Reset the state when the input prop updates
     setShowWord(false);
     handlePlayWord();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
   return (
     <div className="word-box">

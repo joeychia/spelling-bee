@@ -29,6 +29,7 @@ const UserControl: React.FC<UserProps> = ({ onUserChanged }) => {
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onUserChanged]);
 
   const signIn = () => {

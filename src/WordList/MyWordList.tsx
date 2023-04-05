@@ -41,6 +41,7 @@ const MyWordList = ({userId}: Props) => {
       off(wordListsRef);
       off(wordListRef);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, wordlistId]);
 
 

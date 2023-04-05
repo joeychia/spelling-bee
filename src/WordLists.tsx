@@ -56,7 +56,7 @@ interface Props {
   user: User | null;
 }
 const WordLists = ({user}:Props) => {
-  const [wordLists, setWordLists] = useState<WordList[]>(window.gWordLists);
+  const [wordLists] = useState<WordList[]>(window.gWordLists);
 
   return (
     <div className="page-container">

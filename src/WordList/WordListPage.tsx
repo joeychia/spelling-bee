@@ -33,7 +33,7 @@ const WordListPage = ({userId}: Props) => {
     }
 
 
-  }, []);
+  }, [wordlistName]);
 
   const handleStartTest = () => {
     setIsTesting(true);

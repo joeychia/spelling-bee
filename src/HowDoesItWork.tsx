@@ -12,9 +12,9 @@ const HowDoesItWork: React.FC<HowDoesItWorkProps> = () => {
 
   return (
     <div className="p-1 how-does-it-work">
-      <a onClick={toggleExpand} className="expandable-link">
+      <button onClick={toggleExpand} className="btn btn-link expandable-link" >
         {isExpanded ? 'Hide details' : 'How does it work?'}
-      </a>
+      </button>
       {isExpanded && (
         <div className="explanation">
           <p>This webapp is initially built with ChatGPT. That's one of the reasons it's called Spelling Made EZ.</p>

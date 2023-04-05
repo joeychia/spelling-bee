@@ -9,7 +9,7 @@ Use a component placeholder for adding and modifying a word list for now.
 
 import React, { useState, useEffect } from 'react';
 import { getDatabase, off, onValue, ref, remove, set } from 'firebase/database';
-import { FaTrash, FaEdit, FaPlusSquare, FaPlus } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 
 type ManageWordListsProps = {
@@ -46,6 +46,7 @@ const ManageWordLists: React.FC<ManageWordListsProps> = ({ userId }) => {
       }
     });
     return () => off(wordListsRef);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   const handleDelete = (id: string) => {
