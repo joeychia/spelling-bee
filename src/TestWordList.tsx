@@ -34,6 +34,7 @@ type Props = {
 const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
+  const celebrationAudio = new Audio(sound);
 
   useEffect(() => {
     // filter the words that has a score less than 100 in myDict
@@ -59,8 +60,7 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
   };
 
   const playCelebrationSound = () => {
-    const audio = new Audio(sound);
-    audio.play();
+    celebrationAudio.play();
   };
 
   const handlePassed = () => {

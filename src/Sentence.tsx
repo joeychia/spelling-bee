@@ -26,7 +26,7 @@ const Sentence: React.FC<SentenceProps> = ({ word }) => {
     sentenceCache[word] || null
   );
   const [isPlaying, setIsPlaying] = useState(false);
-  const NOT_FOUND = '-404-';
+  const NOT_FOUND = 'NOT FOUND';
   useEffect(() => {
     setSentence(sentenceCache[word] || null);
   }, [word]);
@@ -42,7 +42,6 @@ const Sentence: React.FC<SentenceProps> = ({ word }) => {
   const handleFetchSentence = async () => {
     setIsLoading(true);
     const database = getDatabase(window.gApp);
-    // word = 'apple';
     const sentenceRef = ref(database, `sentences/${word}`);
     onValue(sentenceRef, (snapshot) => {
       const data = snapshot.val();

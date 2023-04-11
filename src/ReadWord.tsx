@@ -33,7 +33,9 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
   useEffect(() => {
     // Reset the state when the input prop updates
     setShowWord(false);
-    handlePlayWord();
+    setTimeout(()=>{
+      handlePlayWord();
+    }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
   return (

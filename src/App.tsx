@@ -7,7 +7,7 @@ import WordListPage from './WordList/WordListPage';
 import { ReviewDict } from './ReviewDict';
 import { firebaseSingleton } from './FirebaseAppSingleton';
 import ManageSentence from './ManageSentence';
-import { User, getAuth } from 'firebase/auth';
+import { User, getAuth} from 'firebase/auth';
 import UserControl from './UserControl';
 import WordListCRUD from './WordList/WordListCRUD';
 import MyWordList from './WordList/MyWordList';
@@ -18,10 +18,13 @@ window.gApp = firebaseSingleton.getInstance();
 window.myDict = new MyDict();
 window.myDict.restoreFromLocal();
 window.gReviewWords =new ReviewDict();
+//disable context menu
+document.addEventListener('contextmenu', event => event.preventDefault());
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const auth = getAuth(window.gApp);
+  // setPersistence(auth, inMemoryPersistence);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);

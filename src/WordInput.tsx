@@ -21,10 +21,21 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   const [listening, setListening] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [recognized, setRecognized] = useState('');
+
+  const specialCharsRegex = /^\.|\.+$/g;
+
+  document.addEventListener('keydown', event => {
+    const inputElement = document.getElementById('spelling-input');
+    if (document.activeElement !== inputElement) {
+      inputElement?.focus();
+    }
+  });
+
   useEffect(() => {
     // Reset the states when the input prop updates
     setListening(false);
     setRecognized('');
+    document.getElementById('spelling-input')?.focus();
   }, [word]);
 
   const recognition = new window.webkitSpeechRecognition();
@@ -80,7 +91,11 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.currentTarget as HTMLInputElement; // type casting
-    setRecognized(target.value);
+    const trimmed = target.value.replace(specialCharsRegex, '').toLocaleLowerCase();
+    setRecognized(trimmed);
+    if (trimmed === word.toLowerCase()) {
+      successHandler?.();
+    }
   };
 
   function shakeInputBox() {
@@ -93,7 +108,7 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   return (
     <div className='input-area mt-1 d-inline-flex'>
 
-      <input type="text" id="spelling-input" className={shaking?"shake":""} disabled={listening} placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
+      <input type="text" id="spelling-input" className={shaking?"shake":""} disabled={listening} autoComplete="off" placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
       <button id="record-btn" className="microphone-icon"  onPointerDown={startListening} onPointerUp={stopListening} ></button>
     </div>
   );
