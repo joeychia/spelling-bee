@@ -47,7 +47,7 @@ const ReadWord: React.FC<Props> = ({ word, sentence, dontKnownHandler }) => {
       <div className='buttons'>
         <button type="button" id="read-word" className='test-btn' onClick={handlePlayWord}>Read</button>
         <Sentence word={word} />
-        <button type="button" id="show-answer" className='test-btn'  onPointerDown={handleShowWord} onPointerUp={handleHideWord} >Peak</button>
+        <button type="button" id="show-answer" className='test-btn'  onPointerDown={handleShowWord} onPointerUp={handleHideWord} >Peek</button>
       </div>
     </div>
   );
