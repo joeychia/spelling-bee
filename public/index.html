@@ -12,16 +12,19 @@
       function renderFeedbackButton() {
         // Create the button element
         var button = document.createElement("button");
-        button.innerHTML = "Leave Feedback";
+        button.innerHTML = "Feedback";
         button.classList.add("feedback-button");
       
+          // Wait for the DOM to load before appending the button
+        document.addEventListener("DOMContentLoaded", function() {
+          document.body.appendChild(button);
+        });
+
         // Add an event listener to navigate to the Google Form when clicked
         button.addEventListener("click", function() {
-          window.location.href = "https://forms.gle/5iY7UszAD7b3CJYAA";
+          window.open("https://forms.gle/5iY7UszAD7b3CJYAA", "_blank");
         });
-        
-        // Append the button to the body of the page
-        document.body.appendChild(button);
+
       }
 
       // Call the function to render the feedback button

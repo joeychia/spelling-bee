@@ -164,14 +164,12 @@
 }
 
 .feedback-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
+  position: static;
+  padding: 5px 10px;
+  background-color: #198754;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  z-index: 9999;
+  float: right;
 }
