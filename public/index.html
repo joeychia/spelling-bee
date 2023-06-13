@@ -9,6 +9,23 @@
       gtag('js', new Date());
 
       gtag('config', 'G-QZHSM76RM9');
+      function renderFeedbackButton() {
+        // Create the button element
+        var button = document.createElement("button");
+        button.innerHTML = "Leave Feedback";
+        button.classList.add("feedback-button");
+      
+        // Add an event listener to navigate to the Google Form when clicked
+        button.addEventListener("click", function() {
+          window.location.href = "https://forms.gle/5iY7UszAD7b3CJYAA";
+        });
+        
+        // Append the button to the body of the page
+        document.body.appendChild(button);
+      }
+
+      // Call the function to render the feedback button
+      renderFeedbackButton();
     </script>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -27,5 +44,6 @@
   <body class="test-body">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    
   </body>
 </html>
