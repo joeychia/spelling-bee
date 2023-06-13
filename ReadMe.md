@@ -12,7 +12,7 @@ Once you hear the word, you can either hold the microphone button to slowly spea
 If you spell the word correctly, you earn 1 point on the word. If you don't, you can try it again or use some hint, like tap "Read" to hear it again, or tap "Sentence" button to hear an example sentence.
 
 If you still can't get it. You can long press the "Peak" button to see the word, and you'll lose 1 point on the word.
-Once your point is positive, it means you're masted it, so you won't see it again in future tests.
+Once your point is positive, it means you're mastered it, so you won't see it again in future tests.
 
 All words you peaked will go to review list. You'll review it on the same day, as well as on the following day, the 3rd day, and the 7th day. The scheduled review will help you memorize them better.
 
