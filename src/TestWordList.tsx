@@ -53,10 +53,12 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
 
   const handleUnfamiliar = () => {
     const currentWord = shuffledWords[currentWordIndex];
-    const newWords = [...shuffledWords, currentWord];
-    setShuffledWords(newWords);
-    window.myDict.changeWordScore(currentWord, -1);
-    window.gReviewWords.addWord(currentWord, listName);
+    if (shuffledWords[shuffledWords.length - 1] != currentWord) {
+      const newWords = [...shuffledWords, currentWord];
+      setShuffledWords(newWords);
+      window.myDict.changeWordScore(currentWord, -1);
+      window.gReviewWords.addWord(currentWord, listName);
+    }
   };
 
   const playCelebrationSound = () => {

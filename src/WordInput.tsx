@@ -108,7 +108,7 @@ const InputWord: React.FC<InputWordProps> = ({ word, successHandler }) => {
   return (
     <div className='input-area mt-1 d-inline-flex'>
 
-      <input type="text" id="spelling-input" className={shaking?"shake":""} disabled={listening} autoComplete="off" placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
+      <input type="text" id="spelling-input" className={shaking?"shake":""} disabled={listening} spellCheck="false" autoComplete="off" placeholder="Type or say the spelling..." value={recognized} onClick={handleClick} onChange={handleInputChange} onKeyUp={handleKeyPress}></input>
       <button id="record-btn" className="microphone-icon"  onPointerDown={startListening} onPointerUp={stopListening} ></button>
     </div>
   );
