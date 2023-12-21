@@ -2,6 +2,8 @@ import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'firebase/database';
 import { Database, getDatabase, off, onValue, ref, set } from 'firebase/database';
+import Typo from "typo-js";
+const dictionary = new Typo("en_US", undefined, undefined, {dictionaryPath: "dictionaries/"});
 
 type RouteParams = {
   wordlistId: string;
@@ -46,16 +48,42 @@ const WordListCRUD = ({userId}: Props) => {
     const splitted = newWords.split(/[,\s]+/).map((word) => word.trim());
 
     const words = splitted.map((word) => word.trim());
-    setList([...list, ...words]);
+    setList(list.concat(words).filter((item, index, arr) => arr.indexOf(item) === index));
     setNewWords("");
   };
 
   const handleDelete = (i: number) => setList(list.filter((_, index) => index !== i));
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = event.target.value.trim();
+    const value = event.target.value;
     setNewWords(value)
   };
+
+  // Function to format words
+  const formatWords = (rawString: string): string => {
+    // Split the string into words
+    const words = rawString.split(/\s+/);
+
+    // Correct typos and spelling for each word
+    const correctedWords = words.map(word => {
+        if (!dictionary.check(word)) {
+            const suggestions = dictionary.suggest(word);
+            return suggestions.length > 0 ? suggestions[0] : word;
+        }
+        return word;
+    });
+
+    // Sort the words
+    correctedWords.sort();
+
+    // Join the words into a single string
+    return correctedWords.join(' ');
+  }
+  const handleFormat = () => {
+    const formatted = formatWords(newWords);
+    setNewWords(formatted);
+  };
+
 
   return (
     <div className="container">
@@ -80,8 +108,9 @@ const WordListCRUD = ({userId}: Props) => {
           <h3>Add Words</h3>
           <h5><small>(single word or multiple words separated by whitespace)</small></h5>
           <div className="input-group mb-3">
-            <textarea className="form-control" onChange={handleInputChange} />
+            <textarea className="form-control" value={newWords} onChange={handleInputChange} />
             <button className="btn btn-primary" type="button" onClick={handleAdd}>Add</button>
+            <button className="btn btn-primary" type="button" onClick={handleFormat}>Format</button>
           </div>
         </div>
       </div>
