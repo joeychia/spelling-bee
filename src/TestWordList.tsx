@@ -53,7 +53,7 @@ const TestWordList: React.FC<Props> = ({ words, exitHandler, listName }) => {
 
   const handleUnfamiliar = () => {
     const currentWord = shuffledWords[currentWordIndex];
-    if (shuffledWords[shuffledWords.length - 1] != currentWord) {
+    if (shuffledWords[shuffledWords.length - 1] !== currentWord) {
       const newWords = [...shuffledWords, currentWord];
       setShuffledWords(newWords);
       window.myDict.changeWordScore(currentWord, -1);
